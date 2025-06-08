@@ -1,103 +1,124 @@
-import Image from "next/image";
+"use client";
+import { useState, useEffect, useRef } from "react";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [color, setColor] = useState("");
+  const [color2, setColor2] = useState("");
+  const [count, setCount] = useState(0);
+  const [start, setStart] = useState(false);
+  const [result, setResult] = useState(0);
+  const [bpmList, setBpmList] = useState<number[]>([]);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  let resultArr: number[] = []
+
+  const bpmListRef = useRef(bpmList);
+  const startRef = useRef(start);
+  const countRef = useRef(count);
+
+  const time = 10
+
+  useEffect(() => {
+    bpmListRef.current = bpmList;
+  }, [bpmList]);
+
+  useEffect(() => {
+    startRef.current = start;
+  }, [start]);
+
+  useEffect(() => {
+    if(count===1){
+      setTimeout(stopTimer, time*1000);
+      bpmPerSec()
+    }
+
+    countRef.current = count;
+  }, [count]);
+
+  function handleKeyDown(e: KeyboardEvent) {
+    if (e.key.toLowerCase() === "x" && startRef.current) {
+      setColor("text-black bg-white");
+      setCount((prev) => {
+        const newCount = prev + 1;
+        countRef.current = newCount; // keep ref in sync
+        return newCount;
+      });
+    }
+    if (e.key.toLowerCase() === "z") {
+      setColor2("text-black bg-white");
+    }
+  }
+
+  function delay(time: number) {
+    return new Promise(function(resolve) {
+      setTimeout(resolve, time);
+    });
+  }
+
+  function handleKeyUp(e: KeyboardEvent) {
+    if (e.key.toLowerCase() === "x" && startRef.current) {
+      setColor("");
+    }
+    if (e.key.toLowerCase() === "z") {
+      setColor2("");
+    }
+  }
+
+  async function bpmPerSec(){
+    for (let i = 0; i < time; i++) {
+      await delay(1000)
+      setBpmList([...bpmListRef.current, (countRef.current*(60/(i+1)))/2])
+      console.log(bpmList)
+    }
+  }
+
+  function stopTimer() {
+    setResult((countRef.current*(60/time))/2); // use the latest value via ref
+    let newArr: number[] = bpmListRef.current
+    newArr[time-1] = (countRef.current*(60/time))/2
+    setBpmList(newArr)
+    setColor("");
+    setCount(0);
+    setStart(false);
+  }
+
+  function startTimer() {
+    if (startRef.current) return;
+    setStart(true);
+    setCount(0);
+    countRef.current = 0; // reset ref too
+  }
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("keyup", handleKeyUp);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("keyup", handleKeyUp);
+    };
+  }, []);
+
+  return (
+    <div className="bg-black text-white font-medium flex flex-col items-center justify-center gap-2 w-screen h-screen">
+      {startRef.current && <div className="mt-6">Started</div>}
+      {countRef.current > 0 && <div className="mt-6">Wait 3s</div>}
+      <button
+        className={`w-12 h-12 border border-white rounded-md focus:outline-none select-none ${color}`}
+      >
+        x
+      </button>
+
+      <button onClick={startTimer} className="mt-6 bg-white text-black px-2 py-1 rounded-md hover:cursor-pointer">
+        Start Timer
+      </button>
+      {count !== 0 && <div className="mt-6">{count}</div>}
+      {result !== 0 && <div className="mt-6">{result}</div>}
+      {bpmList.length > 0 ? (
+        <div className="mt-6">
+          {bpmList.slice(0, time).map((bpm, index) => (
+            <div key={index}>{index+1}s :{bpm} bpm</div>
+          ))}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      ) : null}
     </div>
   );
 }
