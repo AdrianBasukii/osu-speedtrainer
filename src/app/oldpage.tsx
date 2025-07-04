@@ -33,6 +33,9 @@ export default function Home() {
   }, [count]);
 
   function handleKeyDown(e: KeyboardEvent) {
+    if (e.repeat) {
+      return; 
+    }
     if (e.key.toLowerCase() === "x" && startRef.current) {
       setColor("text-black bg-white");
       setCount((prev) => {
@@ -71,7 +74,6 @@ export default function Home() {
     for (let i = 0; i < time; i++) {
       await delay(1000)
       setBpmList([...bpmListRef.current, Math.floor((countRef.current*(60/(i+1)))/divider)])
-      console.log(bpmList)
     }
   }
 

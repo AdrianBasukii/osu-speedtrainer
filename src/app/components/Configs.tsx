@@ -1,3 +1,5 @@
+"use client"
+
 function Configs({children} : {children: React.ReactNode}){
     return(
         <div className="bg-[#181818] rounded-xl p-4 flex gap-8">
@@ -9,7 +11,7 @@ function Configs({children} : {children: React.ReactNode}){
 function ConfigContainer({title, children} : {title: string, children: React.ReactNode}){
     return(
         <div className="flex flex-col gap-2">
-            <h1 className="text-[#444444] cursor-default">{title}</h1>
+            <h1 className="text-[#444444] font-medium cursor-default">{title}</h1>
             {children}
         </div>
     )
@@ -74,9 +76,9 @@ function OptionsConfig({title, options, selected, selectedMeasurement, setConfig
             <div className={`flex gap-2 p-2 bg-[#222222] rounded-md ${disabledVal ? "opacity-25 cursor-not-allowed" : ""}`}>
                 {options.map((option, index) => (
                     <button 
-                    className={`px-2 min-w-10 h-10 rounded-md transition-all duration-150
+                    className={`px-2 min-w-10 h-10 rounded-md text-[#656565] font-medium
                                 ${!disabledVal ? "hover:bg-[#191919] cursor-pointer" : "cursor-not-allowed"}
-                                ${option === selected ? "bg-[#181818]" : ""}`
+                                ${option === selected ? "bg-[#181818] text-[#e5e5e5]" : ""}`
                     } 
                     key={index}
                     onClick={setConfig ? () => setConfig(titleTranslation[title], option) : ()=>{}}
