@@ -3,8 +3,8 @@ import Configs from "./components/Configs";
 import AnimatedContainer from "./components/AnimatedContainer";
 import KeyButton from "./components/KeyButton";
 import MeasurementDisplay from "./components/MeasurementDisplay";
+import ResultDisplay from "./components/ResultDisplay";
 import { useState, useEffect, useRef } from "react";
-import { div } from "motion/react-client";
 
 export default function Home() {
   
@@ -152,6 +152,13 @@ export default function Home() {
       setTime(configs.time)
       setCount(0)
       setBPMList([])
+      setResult({
+        BPMList: [0],
+        peakBPM: 0,
+        avgBPM: 0,
+        totalClicks: 0,
+        totalTime: 0
+      })
 
       const interval = setInterval(() => {
         setTime(prev => {
@@ -190,10 +197,10 @@ export default function Home() {
         <AnimatedContainer gameState={"running"} currGameState={gameState} className="absolute w-full h-full flex items-center justify-center gap-12">
           <MeasurementDisplay title={"BPM"} measurement={BPMList.length > 0 ? Math.round(BPMList[BPMList.length - 1]) : "—"}/>
           {configs.selectedMeasurement === "Time" && <MeasurementDisplay title={"Time"} measurement={`${time.toFixed(1)}s`}/>}
-          {configs.selectedMeasurement === "Clicks" && <MeasurementDisplay title={"Clicks"} measurement={0}/>}
+          {configs.selectedMeasurement === "Clicks" && <MeasurementDisplay title={"Clicks"} measurement={count}/>}
         </AnimatedContainer>
-        <AnimatedContainer gameState={"finished"} currGameState={gameState} className="absolute w-full h-full flex items-center justify-center font-bold text-4xl">
-          {(countRef.current*(60/configs.time))/(2*configs.keyNum)} BPM
+        <AnimatedContainer gameState={"finished"} currGameState={gameState} className="w-full h-full flex items-center justify-center">
+          <ResultDisplay results={result}/>
         </AnimatedContainer>
       </div>
 
