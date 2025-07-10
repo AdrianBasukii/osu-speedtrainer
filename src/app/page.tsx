@@ -196,9 +196,9 @@ export default function Home() {
 
         if(prev <= 0){
 
-          let tl = Object.keys(bpmPerTimeRef.current).map(Number).filter((key, index) => key >= 0.98 && key <= configs.time && Number.isInteger(parseFloat(key.toFixed(2))))
-          const bl = tl.map((key, index) => bpmPerTimeRef.current[key])
-          tl = tl.map((key, index) => parseFloat(key.toFixed(1)))
+          let tl = Object.keys(bpmPerTimeRef.current).map(Number).filter((key) => key >= 0.98 && key <= configs.time && Number.isInteger(parseFloat(key.toFixed(2))))
+          const bl = tl.map((key) => bpmPerTimeRef.current[key])
+          tl = tl.map((key) => parseFloat(key.toFixed(1)))
 
           setResult({
             BPMList: bl,
@@ -236,9 +236,9 @@ export default function Home() {
 
         if(countRef.current === configs.clicks){
 
-          let tl = Object.keys(bpmPerTimeRef.current).map(Number).filter((key, index) => key >= 0.98 && Number.isInteger(parseFloat(key.toFixed(2))))
-          const bl = tl.map((key, index) => bpmPerTimeRef.current[key])
-          tl = tl.map((key, index) => parseFloat(key.toFixed(1)))
+          let tl = Object.keys(bpmPerTimeRef.current).map(Number).filter((key) => key >= 0.98 && Number.isInteger(parseFloat(key.toFixed(2))))
+          const bl = tl.map((key) => bpmPerTimeRef.current[key])
+          tl = tl.map((key) => parseFloat(key.toFixed(1)))
 
           setResult({
             BPMList: bl,
@@ -274,7 +274,7 @@ export default function Home() {
       clickMeasurement()
     }
 
-  }, [gameState])
+  }, [gameState, configs.selectedMeasurement, clickMeasurement, timeMeasurement])
 
   // MAIN PAGE
   return (

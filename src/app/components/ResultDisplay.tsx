@@ -11,10 +11,6 @@ interface Results {
     totalTime: number
   }
 
-type TestingMap = {
-  [key: number]: number;
-};
-
 export default function ResultDisplay({ results } : {results : Results}) {
 
     return(
