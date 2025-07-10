@@ -3,8 +3,8 @@
 import { AnimatePresence, motion } from "motion/react";
 
 interface Props {
-    gameState?: 'idle' | 'running' | 'finished'
-    currGameState?: 'idle' | 'running' | 'finished'
+    gameState?: 'idle' | 'waiting' | 'running' | 'finished'
+    currGameState?: 'idle' | 'waiting' | 'running' | 'finished'
     className: string
     children: React.ReactNode
 }

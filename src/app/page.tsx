@@ -49,13 +49,14 @@ export default function Home() {
    // GAME STATE /////////////////////////////////
   ///////////////////////////////////////////////
 
-  const [gameState, setGameState] = useState<'idle' | 'running' | 'finished'>("idle")
+  const [gameState, setGameState] = useState<'idle' | 'waiting' | 'running' | 'finished'>("idle")
 
   function handleState(){
     if(gameState === "idle"){
-      setGameState("running")
+      setGameState("waiting")
     }
     else{
+      handleReset()
       setGameState("idle")
     }
   }
@@ -94,20 +95,22 @@ export default function Home() {
     if (e.repeat) {
       return; 
     }
-    if (e.key.toLowerCase() === keyRef.current.keyOne.toLowerCase() && gameStateRef.current === "running") {
+    if (e.key.toLowerCase() === keyRef.current.keyOne.toLowerCase() && gameStateRef.current === "running" || gameStateRef.current === "waiting") {
       setButtonColor1("border-white");
       setCount(prev => {
         const newCount = prev + 1;
-        countRef.current = newCount; // keep ref in sync
+        countRef.current = newCount; 
+        if(newCount === 1) setGameState("running")
         return newCount;
       });
     }
 
-    if (e.key.toLowerCase() === keyRef.current.keyTwo.toLowerCase() && gameStateRef.current === "running" && keyRef.current.keyNum > 1) {
+    if (e.key.toLowerCase() === keyRef.current.keyTwo.toLowerCase() && keyRef.current.keyNum > 1 && gameStateRef.current === "running" || gameStateRef.current === "waiting") {
       setButtonColor2("border-white");
       setCount(prev => {
         const newCount = prev + 1;
-        countRef.current = newCount; // keep ref in sync
+        countRef.current = newCount; 
+        if(newCount === 1) setGameState("running")
         return newCount;
       });
     }
@@ -281,9 +284,12 @@ export default function Home() {
         <AnimatedContainer gameState={"idle"} currGameState={gameState} className="absolute w-full h-full flex items-center justify-center gap-6 scale-80">
           <ConfigPanel/>
         </AnimatedContainer>
+        <AnimatedContainer gameState={"waiting"} currGameState={gameState} className="absolute w-full h-full flex items-center justify-center gap-12">
+          <h1 className="text-3xl font-semibold">Click to start</h1>
+        </AnimatedContainer>
         <AnimatedContainer gameState={"running"} currGameState={gameState} className="absolute w-full h-full flex items-center justify-center gap-12">
           <MeasurementDisplay title={"BPM"} measurement={BPMList.length > 0 ? Math.round(BPMList[BPMList.length - 1]) : "—"}/>
-          {configs.selectedMeasurement === "Time" && <MeasurementDisplay title={"Time"} measurement={`${time.toFixed(1)}s`}/>}
+          <MeasurementDisplay title={"Time"} measurement={`${time.toFixed(1)}s`}/>
           {configs.selectedMeasurement === "Clicks" && <MeasurementDisplay title={"Clicks"} measurement={count}/>}
         </AnimatedContainer>
         <AnimatedContainer gameState={"finished"} currGameState={gameState} className="w-full h-full flex items-center justify-center">

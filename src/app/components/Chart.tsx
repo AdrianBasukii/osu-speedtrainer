@@ -3,7 +3,6 @@ import { LineChart } from '@mui/x-charts/LineChart';
 import { chartsTooltipClasses } from '@mui/x-charts';
 
 export default function Chart({BPMList, timeList} : {BPMList: number[], timeList: number[]}){
-    console.log(BPMList, timeList)
     return(
         <LineChart
             xAxis={[{ 
