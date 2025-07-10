@@ -281,7 +281,7 @@ export default function Home() {
         </AnimatedContainer>
         <AnimatedContainer gameState={"running"} currGameState={gameState} className="absolute w-full h-full flex items-center justify-center gap-12">
           <MeasurementDisplay title={"BPM"} measurement={BPMList.length > 0 ? Math.round(BPMList[BPMList.length - 1]) : "—"}/>
-          <MeasurementDisplay title={"Time"} measurement={`${time.toFixed(1)}s`}/>
+          <MeasurementDisplay title={"Time"} measurement={`${parseFloat(time.toFixed(1)) > 0 ? time.toFixed(1) : 0}s`}/>
           {configs.selectedMeasurement === "Clicks" && <MeasurementDisplay title={"Clicks"} measurement={count}/>}
         </AnimatedContainer>
         <AnimatedContainer gameState={"finished"} currGameState={gameState} className="w-full h-full flex items-center justify-center">
