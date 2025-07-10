@@ -132,10 +132,20 @@ export default function Home() {
   }, []);
 
   // Updating values
+
+  interface Results {
+    BPMList: number[],
+    timeList: number[],
+    peakBPM: number,
+    avgBPM: number,
+    totalClicks: number,
+    totalTime: number
+  }
   const [time, setTime] = useState<number>(0)
   const [BPMList, setBPMList] = useState<number[]>([])
-  const [result, setResult] = useState({
-    BPMList: [0],
+  const [result, setResult] = useState<Results>({
+    BPMList: [],
+    timeList: [],
     peakBPM: 0,
     avgBPM: 0,
     totalClicks: 0,
@@ -143,45 +153,122 @@ export default function Home() {
   })
   const gameStateRef = useRef(gameState)
 
+  type BpmPerTimeType = {
+    [key: number]: number;
+  };
+  const[bpmPerTime, setBpmPerTime] = useState<BpmPerTimeType>({})
+  const bpmPerTimeRef = useRef(bpmPerTime)
+
+  useEffect(() => {
+    bpmPerTimeRef.current = bpmPerTime
+  }, [bpmPerTime])
+
+  function handleReset(){
+    setCount(0)
+    countRef.current = 0
+    setBPMList([])
+    setBpmPerTime({})
+    setResult({
+      BPMList: [],
+      timeList: [],
+      peakBPM: 0,
+      avgBPM: 0,
+      totalClicks: 0,
+      totalTime: 0
+    })
+  }
+
+  function timeMeasurement(){
+    setTime(configs.time)
+    handleReset()
+
+    const interval = setInterval(() => {
+      setTime(prev => {
+        setBPMList(prevList => [...prevList, ((countRef.current*(60/Math.abs(prev-configs.time + 0.01)))/(2*configs.keyNum))])
+
+        setBpmPerTime(prevbpmPerTime => ({
+          ...prevbpmPerTime,
+          [Math.abs(prev-configs.time)] : ((countRef.current*(60/Math.abs(prev-configs.time + 0.01)))/(2*configs.keyNum))
+        }))
+
+        if(prev <= 0){
+
+          let tl = Object.keys(bpmPerTimeRef.current).map(Number).filter((key, index) => key >= 0.98 && key <= configs.time && Number.isInteger(parseFloat(key.toFixed(2))))
+          const bl = tl.map((key, index) => bpmPerTimeRef.current[key])
+          tl = tl.map((key, index) => parseFloat(key.toFixed(1)))
+
+          setResult({
+            BPMList: bl,
+            timeList: tl,
+            peakBPM: Math.round(Math.max(...bl)),
+            avgBPM: (countRef.current*(60/configs.time))/(2*configs.keyNum),
+            totalClicks: countRef.current,
+            totalTime: configs.time
+          })
+          setGameState("finished")
+          clearInterval(interval)
+          return 0
+        }
+        if(gameStateRef.current === "idle"){
+          clearInterval(interval)
+          return 0
+        }
+        return prev - 0.1
+      })
+    }, 100)
+  }
+
+  function clickMeasurement(){
+    setTime(0)
+    handleReset()
+
+    const interval = setInterval(() => {
+      setTime(prev => {
+        setBPMList(prevList => [...prevList, ((countRef.current*(60/Math.abs(prev + 0.001)))/(2*configs.keyNum))])
+
+        setBpmPerTime(prevbpmPerTime => ({
+          ...prevbpmPerTime,
+          [Math.abs(prev + 0.001)] : ((countRef.current*(60/Math.abs(prev + 0.001)))/(2*configs.keyNum))
+        }))
+
+        if(countRef.current === configs.clicks){
+
+          let tl = Object.keys(bpmPerTimeRef.current).map(Number).filter((key, index) => key >= 0.98 && Number.isInteger(parseFloat(key.toFixed(2))))
+          const bl = tl.map((key, index) => bpmPerTimeRef.current[key])
+          tl = tl.map((key, index) => parseFloat(key.toFixed(1)))
+
+          setResult({
+            BPMList: bl,
+            timeList: tl,
+            peakBPM: Math.round(Math.max(...bl)),
+            avgBPM: parseFloat(((countRef.current*(60/prev))/(2*configs.keyNum)).toFixed(0)),
+            totalClicks: countRef.current,
+            totalTime: parseFloat(prev.toFixed(2))
+          })
+          setGameState("finished")
+          clearInterval(interval)
+          return 0
+        }
+        if(gameStateRef.current === "idle"){
+          clearInterval(interval)
+          return 0
+        }
+        return prev + 0.1
+      })
+    }, 100)
+  }
+
   useEffect(() => {
     gameStateRef.current = gameState
     setButtonColor1("")
     setButtonColor2("")
 
     if(gameStateRef.current === "running" && configs.selectedMeasurement === "Time"){
-      setTime(configs.time)
-      setCount(0)
-      setBPMList([])
-      setResult({
-        BPMList: [0],
-        peakBPM: 0,
-        avgBPM: 0,
-        totalClicks: 0,
-        totalTime: 0
-      })
+      timeMeasurement()
+    }
 
-      const interval = setInterval(() => {
-        setTime(prev => {
-          setBPMList(prevList => [...prevList, ((countRef.current*(60/Math.abs(prev-configs.time + 0.01)))/(2*configs.keyNum))])
-          if(prev <= 0.2){
-            setResult({
-              BPMList: BPMList,
-              peakBPM: Math.max(...BPMList),
-              avgBPM: (countRef.current*(60/configs.time))/(2*configs.keyNum),
-              totalClicks: countRef.current,
-              totalTime: configs.time
-            })
-            setGameState("finished")
-            clearInterval(interval)
-            return 0
-          }
-          if(gameStateRef.current === "idle"){
-            clearInterval(interval)
-            return 0
-          }
-          return prev - 0.1
-        })
-      }, 100)
+    if(gameStateRef.current === "running" && configs.selectedMeasurement === "Clicks"){
+      clickMeasurement()
     }
 
   }, [gameState])
