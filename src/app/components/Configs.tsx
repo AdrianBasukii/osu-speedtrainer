@@ -2,7 +2,7 @@
 
 function Configs({children} : {children: React.ReactNode}){
     return(
-        <div className="bg-[#181818] rounded-xl p-4 flex gap-8">
+        <div className="bg-[#181818] rounded-xl p-4 flex flex-wrap justify-center items-center gap-8">
             {children}
         </div>
     )
@@ -94,4 +94,33 @@ function OptionsConfig({title, options, selected, selectedMeasurement, setConfig
 Configs.InputConfig = InputConfig
 Configs.OptionsConfig = OptionsConfig
 
-export default Configs
+interface ConfigPanelProps{
+    setConfig?: (a: string | number, b: string | number) => void
+    configsData: {
+        keyNum: number
+        keyOne: string
+        keyTwo: string
+        selectedMeasurement: string
+        time: number
+        clicks: number
+    }
+}
+
+function ConfigPanel({setConfig, configsData} : ConfigPanelProps){
+    return(
+        <>
+        <Configs>
+            <Configs.OptionsConfig title="Keys" setConfig={setConfig} options={[1, 2]} selected={configsData.keyNum}/>
+            <Configs.InputConfig title="Key 1" setConfig={setConfig} keyVal={configsData.keyOne} status={false}/>
+            <Configs.InputConfig title="Key 2" setConfig={setConfig} keyVal={configsData.keyTwo} status={configsData.keyNum === 1}/>
+        </Configs>
+        <Configs>
+            <Configs.OptionsConfig title="Measurement" setConfig={setConfig} options={["Time", "Clicks"]} selected={configsData.selectedMeasurement}/>
+            <Configs.OptionsConfig title="Time" setConfig={setConfig} options={[5,10,15,20]} selected={configsData.time} selectedMeasurement={configsData.selectedMeasurement}/>
+            <Configs.OptionsConfig title="Clicks" setConfig={setConfig} options={[50,100,150,200]} selected={configsData.clicks} selectedMeasurement={configsData.selectedMeasurement}/>
+        </Configs>
+        </> 
+    )
+}
+
+export default ConfigPanel

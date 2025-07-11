@@ -1,6 +1,8 @@
 "use client";
-import Configs from "./components/Configs";
+import ConfigPanel from "./components/Configs";
+import StartButton from "./components/StartButton";
 import AnimatedContainer from "./components/AnimatedContainer";
+import KeyButtonContainer from "./components/KeyButtonContainer"
 import KeyButton from "./components/KeyButton";
 import MeasurementDisplay from "./components/MeasurementDisplay";
 import ResultDisplay from "./components/ResultDisplay";
@@ -26,23 +28,6 @@ export default function Home() {
       ...prev,
       [key]: value,
     }));
-  }
-
-  function ConfigPanel(){
-    return(
-      <>
-        <Configs>
-            <Configs.OptionsConfig title="Keys" setConfig={handleConfigs} options={[1, 2]} selected={configs.keyNum}/>
-            <Configs.InputConfig title="Key 1" setConfig={handleConfigs} keyVal={configs.keyOne} status={false}/>
-            <Configs.InputConfig title="Key 2" setConfig={handleConfigs} keyVal={configs.keyTwo} status={configs.keyNum === 1}/>
-        </Configs>
-        <Configs>
-            <Configs.OptionsConfig title="Measurement" setConfig={handleConfigs} options={["Time", "Clicks"]} selected={configs.selectedMeasurement}/>
-            <Configs.OptionsConfig title="Time" setConfig={handleConfigs} options={[5,10,15,20]} selected={configs.time} selectedMeasurement={configs.selectedMeasurement}/>
-            <Configs.OptionsConfig title="Clicks" setConfig={handleConfigs} options={[50,100,150,200]} selected={configs.clicks} selectedMeasurement={configs.selectedMeasurement}/>
-        </Configs>
-      </> 
-    )
   }
 
     ///////////////////////////////////////////////
@@ -240,7 +225,6 @@ export default function Home() {
           }))
 
           if(countRef.current === configs.clicks){
-
             let tl = Object.keys(bpmPerTimeRef.current).map(Number).filter((key) => key >= 0.98 && Number.isInteger(parseFloat(key.toFixed(2))))
             const bl = tl.map((key) => bpmPerTimeRef.current[key])
             tl = tl.map((key) => parseFloat(key.toFixed(1)))
@@ -272,38 +256,39 @@ export default function Home() {
   return (
     <div className="h-full w-full flex flex-col flex-wrap gap-6 relative">
       {/* Menu/Measurement/Result */}
-      <div className="w-full min-h-32 relative">
-        <AnimatedContainer gameState={"idle"} currGameState={gameState} className="absolute w-full h-full flex items-center justify-center gap-6 scale-80">
-          <ConfigPanel/>
+      <div className="w-full min-h-64 md:min-h-32 relative">
+        <AnimatedContainer delay={0.15} gameState={"idle"} currGameState={gameState} className="absolute w-full h-full flex items-center justify-center gap-6 scale-80">
+          <ConfigPanel configsData={configs} setConfig={handleConfigs}/>
         </AnimatedContainer>
-        <AnimatedContainer gameState={"waiting"} currGameState={gameState} className="absolute w-full h-full flex items-center justify-center gap-12">
+        <AnimatedContainer delay={0} gameState={"waiting"} currGameState={gameState} className="absolute w-full h-full flex items-center justify-center gap-12">
           <h1 className="text-3xl font-semibold">Click to start</h1>
         </AnimatedContainer>
-        <AnimatedContainer gameState={"running"} currGameState={gameState} className="absolute w-full h-full flex items-center justify-center gap-12">
-          <MeasurementDisplay title={"BPM"} measurement={BPMList.length > 0 ? Math.round(BPMList[BPMList.length - 1]) : "—"}/>
+        <AnimatedContainer delay={0} gameState={"running"} currGameState={gameState} className="absolute w-full h-full flex items-center justify-center gap-12">
+          <MeasurementDisplay title={"BPM"} measurement={(BPMList.length > 0 && BPMList[BPMList.length - 1] < 600) ? Math.round(BPMList[BPMList.length - 1]) : "—"}/>
           <MeasurementDisplay title={"Time"} measurement={`${parseFloat(time.toFixed(1)) > 0 ? time.toFixed(1) : 0}s`}/>
           {configs.selectedMeasurement === "Clicks" && <MeasurementDisplay title={"Clicks"} measurement={count}/>}
         </AnimatedContainer>
-        <AnimatedContainer gameState={"finished"} currGameState={gameState} className="w-full h-full flex items-center justify-center">
+        <AnimatedContainer delay={0} gameState={"finished"} currGameState={gameState} className="w-full h-full flex flex-col items-center justify-center">
           <ResultDisplay results={result}/>
+          <StartButton handleState={() => handleState()} gameState={gameState}/>
         </AnimatedContainer>
       </div>
 
       {/* Tap button display */}
       {gameState !== "finished" &&
-        <div className="h-64 flex items-center justify-center gap-12">
-          <KeyButton text={configs.keyOne} buttonPressClass={buttonColor1}/>
-          {configs.keyNum === 2 && <KeyButton text={configs.keyTwo} buttonPressClass={buttonColor2}/>}
-        </div>
+      <>
+        <KeyButtonContainer currGameState={gameState} className="flex flex-wrap items-center justify-center">
+          <div className="h-64 flex items-center justify-center gap-12">
+            <KeyButton text={configs.keyOne} buttonPressClass={buttonColor1}/>
+            {configs.keyNum === 2 && <KeyButton text={configs.keyTwo} buttonPressClass={buttonColor2}/>}
+          </div>
+          <StartButton handleState={() => handleState()} gameState={gameState}/>
+        </KeyButtonContainer>
+      </>
+        
       }
 
       {/* Start/restart button */}
-      <div className="w-96 h-48 flex items-center justify-center absolute bottom-40 left-0 right-0 mx-auto">
-        <button onClick={() => handleState()} className="font-semibold text-2xl hover:cursor-pointer">
-          {gameState === "idle" && "Start"}
-          {gameState !== "idle" && "↻"}
-        </button>
-      </div>
 
     </div>
   );
