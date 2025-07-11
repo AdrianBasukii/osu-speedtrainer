@@ -224,7 +224,7 @@ export default function Home() {
             [Math.abs(prev + 0.001)] : ((countRef.current*(60/Math.abs(prev + 0.001)))/(2*configs.keyNum))
           }))
 
-          if(countRef.current === configs.clicks){
+          if(countRef.current >= configs.clicks){
             let tl = Object.keys(bpmPerTimeRef.current).map(Number).filter((key) => key >= 0.98 && Number.isInteger(parseFloat(key.toFixed(2))))
             const bl = tl.map((key) => bpmPerTimeRef.current[key])
             tl = tl.map((key) => parseFloat(key.toFixed(1)))
