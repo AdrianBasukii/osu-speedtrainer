@@ -1,11 +1,11 @@
 "use client";
-import ConfigPanel from "./components/Configs";
-import StartButton from "./components/StartButton";
-import AnimatedContainer from "./components/AnimatedContainer";
-import KeyButtonContainer from "./components/KeyButtonContainer"
-import KeyButton from "./components/KeyButton";
-import MeasurementDisplay from "./components/MeasurementDisplay";
-import ResultDisplay from "./components/ResultDisplay";
+import ConfigPanel from "./components/Home/Configs";
+import StartButton from "./components/Home/StartButton";
+import AnimatedContainer from "./components/Home/AnimatedContainer";
+import KeyButtonContainer from "./components/Home/KeyButtonContainer"
+import KeyButton from "./components/Home/KeyButton";
+import MeasurementDisplay from "./components/Home/MeasurementDisplay";
+import ResultDisplay from "./components/Home/ResultDisplay";
 import { useState, useEffect, useRef } from "react";
 
 export default function Home() {
@@ -287,8 +287,6 @@ export default function Home() {
       </>
         
       }
-
-      {/* Start/restart button */}
 
     </div>
   );
