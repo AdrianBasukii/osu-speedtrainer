@@ -38,62 +38,6 @@ export default function RecentContainer() {
                         <td>230</td>
                         <td className="rounded-r-xl px-4">92%</td>
                     </tr>
-                    <tr className="text-left bg-[#222222] w-full h-12 mb-4">
-                        <td className="rounded-l-xl px-4">Today 11:50</td>
-                        <td>1 key</td>
-                        <td>5s</td>
-                        <td>37</td>
-                        <td>230</td>
-                        <td className="rounded-r-xl px-4">92%</td>
-                    </tr>
-                    <tr className="text-left bg-[#222222] w-full h-12 mb-4">
-                        <td className="rounded-l-xl px-4">Today 11:50</td>
-                        <td>1 key</td>
-                        <td>5s</td>
-                        <td>37</td>
-                        <td>230</td>
-                        <td className="rounded-r-xl px-4">92%</td>
-                    </tr>
-                    <tr className="text-left bg-[#222222] w-full h-12 mb-4">
-                        <td className="rounded-l-xl px-4">Today 11:50</td>
-                        <td>1 key</td>
-                        <td>5s</td>
-                        <td>37</td>
-                        <td>230</td>
-                        <td className="rounded-r-xl px-4">92%</td>
-                    </tr>
-                    <tr className="text-left bg-[#222222] w-full h-12 mb-4">
-                        <td className="rounded-l-xl px-4">Today 11:50</td>
-                        <td>1 key</td>
-                        <td>5s</td>
-                        <td>37</td>
-                        <td>230</td>
-                        <td className="rounded-r-xl px-4">92%</td>
-                    </tr>
-                    <tr className="text-left bg-[#222222] w-full h-12 mb-4">
-                        <td className="rounded-l-xl px-4">Today 11:50</td>
-                        <td>1 key</td>
-                        <td>5s</td>
-                        <td>37</td>
-                        <td>230</td>
-                        <td className="rounded-r-xl px-4">92%</td>
-                    </tr>
-                    <tr className="text-left bg-[#222222] w-full h-12 mb-4">
-                        <td className="rounded-l-xl px-4">Today 11:50</td>
-                        <td>1 key</td>
-                        <td>5s</td>
-                        <td>37</td>
-                        <td>230</td>
-                        <td className="rounded-r-xl px-4">92%</td>
-                    </tr>
-                    <tr className="text-left bg-[#222222] w-full h-12 mb-4">
-                        <td className="rounded-l-xl px-4">Today 11:50</td>
-                        <td>1 key</td>
-                        <td>5s</td>
-                        <td>37</td>
-                        <td>230</td>
-                        <td className="rounded-r-xl px-4">92%</td>
-                    </tr>
 
                 </tbody>
             </table>
