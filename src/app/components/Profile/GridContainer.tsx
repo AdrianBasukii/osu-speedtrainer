@@ -5,7 +5,7 @@ interface Props{
 
 export default function ProfileContainer({children, className} : Props){
     return(
-        <div className={`w-full grid gap-6 ${className}`}>
+        <div className={`w-full grid gap-8 min-h-32 ${className}`}>
             {children}
         </div>
     )
