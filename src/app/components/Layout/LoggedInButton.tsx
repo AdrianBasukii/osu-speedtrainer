@@ -11,7 +11,7 @@ import { AnimatePresence, motion } from "motion/react";
 import Link from 'next/link';
 
 export default function LoggedInButton({children}: {children: React.ReactNode}){
-    const [isOpen, setOpen] = useState<boolean>(true)
+    const [isOpen, setOpen] = useState<boolean>(false)
 
     function handleDropdown(){
         setOpen(!isOpen)

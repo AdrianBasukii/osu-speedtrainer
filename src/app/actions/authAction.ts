@@ -1,6 +1,6 @@
 "use server"
 
-import { signIn, signOut } from "@/lib/auth"
+import { auth, signIn, signOut } from "@/lib/auth"
 
 export async function handleSignIn(formData: FormData){
     const provider = formData.get("provider") as string
