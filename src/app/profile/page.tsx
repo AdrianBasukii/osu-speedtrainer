@@ -4,8 +4,16 @@ import UserProfile from "../components/Profile/UserProfile"
 import Statistic from "../components/Profile/Statistic"
 import RecentContainer from "../components/Profile/RecentContainer"
 import PersonalBest from "../components/Profile/PersonalBest"
+import { auth } from "@/lib/auth"
+import { notFound } from "next/navigation"
 
-export default function Profile(){
+export default async function Profile(){
+    const session = await auth()
+
+    if(!session){
+        notFound()
+    }
+    
     return(
         <div className="w-full h-full">
             <ProfileContent />

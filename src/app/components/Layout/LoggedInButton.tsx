@@ -46,7 +46,7 @@ export default function LoggedInButton({children}: {children: React.ReactNode}){
                         <HomeIcon sx={{fontSize: 20}}/>
                         Home
                     </DropdownItem>
-                    <DropdownItem href="/profile" className='rounded-t-md border-b border-[#222222]'>
+                    <DropdownItem href="/profile" className='border-b border-[#222222]'>
                         <PersonIcon sx={{fontSize: 20}}/>
                         Profile
                     </DropdownItem>
