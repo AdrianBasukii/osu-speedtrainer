@@ -2,8 +2,8 @@ import mongoose from "mongoose"
 
 const statisticsSchema = new mongoose.Schema({
     "TotalTests": {type: Number, default: 0},
-    "Time Trained": {type: Number, default: 0},
-    "Avg Consistency": {type: Number, default: 0},
+    "TimeTrained": {type: Number, default: 0},
+    "AvgConsistency": {type: Number, default: 0},
 })
 
 const recordsSchema = new mongoose.Schema({

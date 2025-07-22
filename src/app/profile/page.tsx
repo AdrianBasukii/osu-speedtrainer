@@ -6,13 +6,10 @@ import RecentContainer from "../components/Profile/RecentContainer"
 import PersonalBest from "../components/Profile/PersonalBest"
 import { auth } from "@/lib/auth"
 import { notFound } from "next/navigation"
+import User from "@/models/User"
+import Records from "@/models/Records"
 
-export default async function Profile(){
-    const session = await auth()
-
-    if(!session){
-        notFound()
-    }
+export default function Profile(){
     
     return(
         <div className="w-full h-full">
@@ -21,20 +18,31 @@ export default async function Profile(){
     )
 }
 
-function ProfileContent(){
+async function ProfileContent(){
+    const session = await auth()
+
+    if(!session || !session.user){
+        notFound()
+    }
+
+    let userData = await User.findOne({email: session.user.email})
+    let userProfileData = await Records.findOne({userID: session.user.id})
+
+    console.log(userProfileData.statistics.TotalTests)
+
     return(
         <div className="w-full h-full flex flex-col gap-8">
 
             {/* Statistics */}
             <GridContainer className="grid-cols-2 md:grid-cols-[4fr_9fr]">
                 <ProfileContainer>
-                    <UserProfile/>
+                    <UserProfile username={userData?.name} joindate={userData?.joindate}/>
                 </ProfileContainer>
                 <ProfileContainer>
                     <ProfileContainer.Content className="grid grid-cols-none gap-6 md:gap-0 grid-rows-3 md:grid-rows-none md:grid-cols-3">
-                        <Statistic title="Total Tests" content={847} className="text-center md:text-left"/>
-                        <Statistic title="Time Trained" content={"9h 26m"} className="text-center md:text-left"/>
-                        <Statistic title="Avg Consistency" content={"92%"} className="text-center md:text-left"/>
+                        <Statistic title="Total Tests" content={userProfileData.statistics.TotalTests} className="text-center md:text-left"/>
+                        <Statistic title="Time Trained" content={userProfileData.statistics.TimeTrained} className="text-center md:text-left"/>
+                        <Statistic title="Avg Consistency" content={userProfileData.statistics.TotalTests} className="text-center md:text-left"/>
                     </ProfileContainer.Content>
                 </ProfileContainer>
             </GridContainer>

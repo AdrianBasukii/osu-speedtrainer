@@ -1,6 +1,6 @@
 "use server"
-import { redirect } from "next/navigation"
 import { signIn, signOut } from "@/lib/auth"
+import { disconnectDB } from "@/lib/db"
 
 export async function handleSignIn(formData: FormData){
     const provider = formData.get("provider") as string
@@ -8,5 +8,6 @@ export async function handleSignIn(formData: FormData){
 }
 
 export async function handleSignOut(){
+    disconnectDB()
     await signOut({redirectTo: '/'})
 }
