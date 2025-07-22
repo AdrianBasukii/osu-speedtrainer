@@ -24,11 +24,15 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
           name: session.user.name,
           email: session.user.email,
           password: "-",
+          joindate: new Date()
         })
 
         existingUser = await User.findOne({email: session.user.email})
+        const existingRecords = await Records.findOne({userID: existingUser._id})
 
-        await Records.create({userID: existingUser._id})
+        if(!existingRecords){
+          await Records.create({userID: existingUser._id})
+        }
       }
     
       return {

@@ -1,12 +1,14 @@
 import mongoose from "mongoose"
 
+const statisticsSchema = new mongoose.Schema({
+    "TotalTests": {type: Number, default: 0},
+    "Time Trained": {type: Number, default: 0},
+    "Avg Consistency": {type: Number, default: 0},
+})
+
 const recordsSchema = new mongoose.Schema({
     userID:{type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
-    "statistics":{
-        "TotalTests": {type: Number, default: 0},
-        "Time Trained": {type: Number, default: 0},
-        "Avg Consistency": {type: Number, default: 0},
-    },
+    "statistics":{type: statisticsSchema, default: () => ({})},
     "1key":{
         time:{
             "5s": { type: Number, default: 0 },
