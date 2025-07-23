@@ -1,6 +1,6 @@
 "use client"
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { AnimatePresence, motion } from "motion/react";
 
 interface SelectProps{
@@ -10,15 +10,33 @@ interface SelectProps{
 }
 
 export default function ProfileDropdown({options, onClick, value} : SelectProps){
-
+    const dropdownRef = useRef<HTMLDivElement>(null)
     const [isOpen, setOpen] = useState(false)
 
     function handleDropdown(){
         setOpen(!isOpen)
     }
+
+    useEffect(() => {
+        function clickOutsideHandler(event: MouseEvent) {
+            if (
+                dropdownRef.current &&
+                event.target instanceof Node &&
+                !dropdownRef.current.contains(event.target)
+            ) {
+                setOpen(false);
+            }
+        }
+
+        document.addEventListener("mousedown", clickOutsideHandler)
+
+        return () => {
+            document.removeEventListener("mousedown", clickOutsideHandler)
+        };
+    }, [dropdownRef])
     
     return (
-    <div className='w-28 relative select-none'>
+    <div className='w-28 relative select-none' ref={dropdownRef}>
         <div 
             onClick={handleDropdown}
             className="w-full px-3 py-2 border-2 border-[#222222] rounded-md font-medium text-[#444444] 
