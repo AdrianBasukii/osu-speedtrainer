@@ -5,21 +5,41 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import HomeIcon from '@mui/icons-material/Home';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { handleSignOut } from "@/app/actions/authAction";
 import { AnimatePresence, motion } from "motion/react";
 import Link from 'next/link';
 
 export default function LoggedInButton({children}: {children: React.ReactNode}){
     const [isOpen, setOpen] = useState<boolean>(false)
+    const dropdownRef = useRef<HTMLDivElement>(null)
 
     function handleDropdown(){
         setOpen(!isOpen)
     }
 
+    useEffect(() => {
+        function clickOutsideHandler(event: MouseEvent) {
+            if (
+                dropdownRef.current &&
+                event.target instanceof Node &&
+                !dropdownRef.current.contains(event.target)
+            ) {
+                setOpen(false);
+            }
+        }
+
+        document.addEventListener("mousedown", clickOutsideHandler)
+
+        return () => {
+            document.removeEventListener("mousedown", clickOutsideHandler)
+        };
+    }, [dropdownRef])
+
     return(
         <div className='w-48 relative select-none'>
             <div 
+            ref={dropdownRef}
             onClick={handleDropdown}
             className="w-full px-3 py-2 bg-[#181818] rounded-md font-medium text-[#444444] 
             hover:cursor-pointer transition-all flex justify-between">

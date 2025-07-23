@@ -2,7 +2,6 @@ import NextAuth, { type DefaultSession } from "next-auth"
 import User from "@/models/User"
 import Records from "@/models/Records"
 import Google from "next-auth/providers/google"
-import { connectDB } from "./db"
 import { ObjectId } from "mongoose"
 
 interface Session {
@@ -15,7 +14,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   providers: [Google],
   callbacks:{
     async session({session}){
-      await connectDB()
       const email = session.user.email
       let existingUser = await User.findOne({email})
 
