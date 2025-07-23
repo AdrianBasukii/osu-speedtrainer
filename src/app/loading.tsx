@@ -1,4 +1,4 @@
-// TO BE CHANGED
+import { BarLoader } from "react-spinners"
 
 export default function Loading() {
   return <LoadingDisplay/>
@@ -6,8 +6,15 @@ export default function Loading() {
 
 function LoadingDisplay(){
     return (
-      <div className="absolute top-0 left-0 z-100 w-screen h-screen bg-black/50 text-white justify-center items-center flex text-3xl font-medium">
-        LOADING!...
+      <div className="w-full h-full flex items-center justify-center">
+        <BarLoader
+          height={8}
+          width={128}
+          color="#e5e5e5"
+          cssOverride={{
+            borderRadius: '20px'
+          }}
+        />
       </div>
     )
 }
