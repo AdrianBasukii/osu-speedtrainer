@@ -28,8 +28,6 @@ async function ProfileContent(){
     let userData = await User.findOne({email: session.user.email})
     let userProfileData = await Records.findOne({userID: session.user.id})
 
-    console.log(userProfileData.statistics.TotalTests)
-
     return(
         <div className="w-full h-full flex flex-col gap-8">
 

@@ -40,27 +40,8 @@ interface SelectProps{
     onChange: (value: string) => void
 }
 
-function ProfileSelect({options, onChange} : SelectProps){
-    return (
-    <select 
-    onChange={(e) => onChange(e.target.value)}
-    className="min-w-24 px-2 border-2 border-[#333333] text-[#444444] rounded-md focus:outline-none hover:cursor-pointer">
-        {options.map((option, key) => (
-            <option 
-            key={key} 
-            value={option}
-            className="bg-[#181818]">
-                {option}
-            </option>
-        )
-        )}
-    </select>
-)
-
-}
-
 
 ProfileContainer.Heading = ProfileHeading
 ProfileContainer.Content = ProfileContent
-ProfileContainer.Select = ProfileSelect
+
 export default ProfileContainer

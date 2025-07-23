@@ -2,6 +2,7 @@
 import { useState } from "react"
 import ProfileContainer from "./ProfileContainer"
 import Statistic from "./Statistic"
+import ProfileDropdown from "./ProfileDropdown"
 
 export default function PersonalBest(){
 
@@ -9,6 +10,7 @@ export default function PersonalBest(){
     const [keyNumber, setKeyNumber] = useState<string>("1 Key")
 
     function handleMeasurement(value: string){
+        if(value)
         setMeasurement(value)
     }
 
@@ -19,8 +21,8 @@ export default function PersonalBest(){
     return(
         <>
             <ProfileContainer.Heading title={"Personal Best"}>
-                <ProfileContainer.Select onChange={handleMeasurement} options={["Time", "Clicks"]}/>
-                <ProfileContainer.Select onChange={handleKeyNumber} options={["1 Key", "2 Key"]}/>
+                <ProfileDropdown value={measurement} onClick={handleMeasurement} options={["Time", "Clicks"]}/>
+                <ProfileDropdown value={keyNumber} onClick={handleKeyNumber} options={["1 Key", "2 Key"]}/>
             </ProfileContainer.Heading>
 
             <ProfileContainer.Content className="py-12 grid grid-cols-2 gap-6 md:gap-0 grid-rows-2 md:grid-rows-none md:grid-cols-4">
