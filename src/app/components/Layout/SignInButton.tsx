@@ -17,8 +17,8 @@ export default function SignInButton({children}:{children: React.ReactNode}){
             {popupShown && <SignupPopup onClick={handlePopup}/>}
             <button 
                 onClick={handlePopup}
-                className="px-4 py-1 border-2 border-[#333333] hover:border-[#e5e5e5] rounded-md text-[#444444] 
-                hover:text-[#e5e5e5] hover:cursor-pointer transition-all">
+                className="px-4 py-1 border-2 border-[#333333] hover:border-[#555555] rounded-md text-[#444444] 
+                 hover:cursor-pointer transition-all">
                     {children}
             </button>
         </>

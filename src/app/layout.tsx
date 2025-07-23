@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "osu! Speedtrainer",
-  description: "train speed osu",
+  description: "Train your streaming or singletapping speed",
 };
 
 export default function RootLayout({
