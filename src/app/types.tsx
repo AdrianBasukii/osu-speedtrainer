@@ -27,11 +27,12 @@ export type personalBestType = {
 }
 
 export interface Results {
-    BPMList: number[],
-    timeList: number[],
-    peakBPM: number,
-    avgBPM: number,
-    totalClicks: number,
-    totalTime: number,
+    BPMList: number[]
+    timeList: number[]
+    peakBPM: number
+    avgBPM: number
+    totalClicks: number
+    totalTime: number
     consistency: number
+    mode: string
 }

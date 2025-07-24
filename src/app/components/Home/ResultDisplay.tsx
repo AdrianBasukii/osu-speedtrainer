@@ -1,9 +1,16 @@
-"use client"
 import Chart from "./Chart"
 import MeasurementDisplay from "./MeasurementDisplay"
 import { Results } from "@/app/types";
+import { handleSubmitActivity } from "@/app/actions/authAction";
+import { useEffect } from "react";
 
 export default function ResultDisplay({ results } : {results : Results}) {
+
+    const handleSubmit = () => {
+        handleSubmitActivity(results)
+    }
+
+    useEffect(handleSubmit, [])
 
     return(
         <div className="w-full flex flex-col gap-12">

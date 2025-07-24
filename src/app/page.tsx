@@ -123,15 +123,17 @@ export default function Home() {
   // Updating values
   const [time, setTime] = useState<number>(0)
   const [BPMList, setBPMList] = useState<number[]>([])
-  const [result, setResult] = useState<Results>({
+  const defaultResults : Results = {
     BPMList: [],
     timeList: [],
     peakBPM: 0,
     avgBPM: 0,
     totalClicks: 0,
     totalTime: 0,
-    consistency: 0
-  })
+    consistency: 0,
+    mode: `${configs.keyNum} key`
+  }
+  const [result, setResult] = useState<Results>(defaultResults)
   const gameStateRef = useRef(gameState)
 
   type BpmPerTimeType = {
@@ -149,15 +151,7 @@ export default function Home() {
     countRef.current = 0
     setBPMList([])
     setBpmPerTime({})
-    setResult({
-      BPMList: [],
-      timeList: [],
-      peakBPM: 0,
-      avgBPM: 0,
-      totalClicks: 0,
-      totalTime: 0,
-      consistency: 0
-    })
+    setResult(defaultResults)
   }
 
   function consistencyCalc(arr : number[], mean: number){
@@ -202,7 +196,8 @@ export default function Home() {
               avgBPM: Math.round(mean),
               totalClicks: countRef.current,
               totalTime: configs.time,
-              consistency: Math.round(consistency)
+              consistency: Math.round(consistency),
+              mode: `${configs.keyNum} key`
             })
             setGameState("finished")
             clearInterval(interval)
@@ -247,7 +242,8 @@ export default function Home() {
               avgBPM: Math.round(sum/bl.length),
               totalClicks: countRef.current,
               totalTime: parseFloat(prev.toFixed(2)),
-              consistency: Math.round(consistency)
+              consistency: Math.round(consistency),
+              mode: `${configs.keyNum} key`
             })
             setGameState("finished")
             clearInterval(interval)
