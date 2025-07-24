@@ -8,6 +8,7 @@ import { auth } from "@/lib/auth"
 import { notFound } from "next/navigation"
 import User from "@/models/User"
 import Records from "@/models/Records"
+import { personalBestType } from "../types"
 
 export default function Profile(){
     
@@ -25,8 +26,13 @@ async function ProfileContent(){
         notFound()
     }
 
-    let userData = await User.findOne({email: session.user.email})
-    let userProfileData = await Records.findOne({userID: session.user.id})
+    const userData = await User.findOne({email: session.user.email})
+    const userProfileData = await Records.findOne({userID: session.user.id})
+
+    const personalBestData: personalBestType = {
+        '1key': JSON.parse(JSON.stringify(userProfileData['1key'])),
+        '2key': JSON.parse(JSON.stringify(userProfileData['2key']))
+    }
 
     return(
         <div className="w-full h-full flex flex-col gap-8">
@@ -48,7 +54,7 @@ async function ProfileContent(){
             {/* Top Scores */}
             <GridContainer>
                 <ProfileContainer>
-                    <PersonalBest/>
+                    {personalBestData && <PersonalBest personalBestData={personalBestData}/>}
                 </ProfileContainer>
             </GridContainer>
 

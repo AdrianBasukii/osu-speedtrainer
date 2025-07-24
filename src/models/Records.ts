@@ -1,42 +1,39 @@
 import mongoose from "mongoose"
 
+// 1. CHANGE AvgConsistency to TotalConsistency -> later in profile divide it by total test
+// 2. update the key data
+
 const statisticsSchema = new mongoose.Schema({
     "TotalTests": {type: Number, default: 0},
     "TimeTrained": {type: Number, default: 0},
-    "AvgConsistency": {type: Number, default: 0},
-})
+    "TotalConsistency": {type: Number, default: 0},
+}, { _id : false })
+
+const dataSchema = new mongoose.Schema({
+    bpmValue: { type: Number, default: 0 },
+    setAt: { type: Date }
+}, { _id : false })
+
+const keyDataSchema = new mongoose.Schema({
+    time:{
+        "5s": { type: dataSchema, default: () => ({})},
+        "10s": { type: dataSchema, default: () => ({})},
+        "15s": { type: dataSchema, default: () => ({})},
+        "20s": { type: dataSchema, default: () => ({})},
+        },
+    clicks:{
+        "50": { type: dataSchema, default: () => ({})},
+        "100": { type: dataSchema, default: () => ({}) },
+        "150": { type: dataSchema, default: () => ({}) },
+        "200": { type: dataSchema, default: () => ({}) },
+    }
+}, { _id : false })
 
 const recordsSchema = new mongoose.Schema({
     userID:{type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
     "statistics":{type: statisticsSchema, default: () => ({})},
-    "1key":{
-        time:{
-            "5s": { type: Number, default: 0 },
-            "10s": { type: Number, default: 0 },
-            "15s": { type: Number, default: 0 },
-            "20s": { type: Number, default: 0 },
-        },
-        clicks:{
-            "50": { type: Number, default: 0 },
-            "100": { type: Number, default: 0 },
-            "150": { type: Number, default: 0 },
-            "200": { type: Number, default: 0 },
-        }
-    },
-    "2key":{
-        time:{
-            "5s": { type: Number, default: 0 },
-            "10s": { type: Number, default: 0 },
-            "15s": { type: Number, default: 0 },
-            "20s": { type: Number, default: 0 },
-        },
-        clicks:{
-            "50": { type: Number, default: 0 },
-            "100": { type: Number, default: 0 },
-            "150": { type: Number, default: 0 },
-            "200": { type: Number, default: 0 },
-        }
-    }
+    "1key": {type: keyDataSchema, default: () => ({})},
+    "2key": {type: keyDataSchema, default: () => ({})}
 })
 
 const Records = mongoose.models.Records || mongoose.model("Records", recordsSchema)

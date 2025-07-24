@@ -36,9 +36,10 @@ export default function ProfileDropdown({options, onClick, value} : SelectProps)
     }, [dropdownRef])
     
     return (
-    <div className='w-28 relative select-none' ref={dropdownRef}>
+    <div className='w-28 relative select-none'>
         <div 
             onClick={handleDropdown}
+            ref={dropdownRef}
             className="w-full px-3 py-2 border-2 border-[#222222] rounded-md font-medium text-[#444444] 
             hover:cursor-pointer transition-all flex justify-between">
             <p className='max-w-2/3 h-full flex items-center gap-2 truncate'>

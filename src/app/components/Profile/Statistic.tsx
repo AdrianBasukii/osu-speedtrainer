@@ -1,7 +1,7 @@
 interface Props{
     title: string
     content: string | number | undefined
-    time?: string
+    time?: string | undefined
     className?: string
 }
 

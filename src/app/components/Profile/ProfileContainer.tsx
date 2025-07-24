@@ -35,11 +35,6 @@ function ProfileContent({children, className} : Props){
     )
 }
 
-interface SelectProps{
-    options: string[]
-    onChange: (value: string) => void
-}
-
 
 ProfileContainer.Heading = ProfileHeading
 ProfileContainer.Content = ProfileContent
