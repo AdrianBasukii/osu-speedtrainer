@@ -35,7 +35,7 @@ async function ProfileContent(){
         '2key': JSON.parse(JSON.stringify(userProfileData['2key']))
     }
 
-    const recentActivity = await Recents.find({userID: session.user.id})
+    const recentActivity = await Recents.find({userID: session.user.id}).sort({setDate: -1})
 
     return(
         <div className="w-full h-full flex flex-col gap-8">
@@ -49,7 +49,7 @@ async function ProfileContent(){
                     <ProfileContainer.Content className="grid grid-cols-none gap-6 md:gap-0 grid-rows-3 md:grid-rows-none md:grid-cols-3">
                         <Statistic title="Total Tests" content={userProfileData.statistics.TotalTests} className="text-center md:text-left"/>
                         <Statistic title="Time Trained" content={userProfileData.statistics.TimeTrained} className="text-center md:text-left"/>
-                        <Statistic title="Avg Consistency" content={userProfileData.statistics.TotalTests} className="text-center md:text-left"/>
+                        <Statistic title="Avg Consistency" content={`${userProfileData.statistics.TotalConsistency/userProfileData.statistics.TotalTests}%`} className="text-center md:text-left"/>
                     </ProfileContainer.Content>
                 </ProfileContainer>
             </GridContainer>
@@ -66,7 +66,7 @@ async function ProfileContent(){
                 <ProfileContainer>
                     <ProfileContainer.Heading title={"Recent Activity"} />
                     <ProfileContainer.Content className="py-6">
-                        <RecentContainer recentActivity={recentActivity}/>
+                        <RecentContainer recentActivity={JSON.parse(JSON.stringify(recentActivity))}/>
                     </ProfileContainer.Content>
                 </ProfileContainer>
             </GridContainer>

@@ -1,7 +1,24 @@
+"use client"
 import { recentActivity } from "@/app/types";
 import { formatDistanceToNow } from "date-fns";
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 
 export default function RecentContainer({recentActivity} : {recentActivity: recentActivity[]}) {
+
+    const [selectedActivity, setSelected] = useState<recentActivity[]>(recentActivity.slice(0,5))
+    const [shown, setShown] = useState<boolean>(false)
+
+    function handleShow(){
+        if(!shown){
+            setShown(!shown)
+            setSelected(recentActivity)
+        } else{
+            setShown(!shown)
+            setSelected(recentActivity.slice(0,5))
+        }
+    }
 
     return (
         <div>
@@ -17,16 +34,24 @@ export default function RecentContainer({recentActivity} : {recentActivity: rece
                     </tr>
                 </thead>
                 {recentActivity.length>0 ?
-                    recentActivity.map((data, key) => (
+                    selectedActivity.map((data, key) => (
                     <tbody key={key}>
-                        <tr className="text-left bg-[#222222] w-full h-12 mb-4 font-medium">
+                        <AnimatePresence>
+                        <motion.tr 
+                            className="text-left bg-[#222222] w-full h-12 mb-4 font-medium"
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.2}}
+                            exit={{ opacity: 0, y: -20}}
+                        >
                             <td className="rounded-l-xl px-4">{data.consistency}%</td>
                             <td>{data.mode}</td>
                             <td>{data.duration} seconds</td>
                             <td>{data.clicks} clicks</td>
                             <td>{data.bpm} BPM</td>
                             <td className="rounded-r-xl px-4 text-sm">{formatDistanceToNow(data.setDate)} ago</td>
-                        </tr>
+                        </motion.tr>
+                        </AnimatePresence>
                     </tbody>
                     )) : 
                     <tbody>
@@ -40,6 +65,15 @@ export default function RecentContainer({recentActivity} : {recentActivity: rece
 
                 
             </table>
+            <div className="w-full py-3 flex items-center justify-center">
+                <button onClick={() => handleShow()} className="flex items-center justify-center gap-3 text-sm text-[#444444] border-2 border-[#222222] px-4 py-1 rounded-full hover:cursor-pointer">
+                    {!shown && "Show More"}
+                    {shown && "Show Less"}
+                    <div className={`transition-all ${shown ? 'rotate-180' : ''}`}>
+                        <KeyboardArrowDownIcon/>
+                    </div>
+                </button>
+            </div>
         </div>
     );
 }
