@@ -8,6 +8,7 @@ import { auth } from "@/lib/auth"
 import { notFound } from "next/navigation"
 import User from "@/models/User"
 import Records from "@/models/Records"
+import Recents from "@/models/Recents"
 import { personalBestType } from "../types"
 
 export default function Profile(){
@@ -33,6 +34,8 @@ async function ProfileContent(){
         '1key': JSON.parse(JSON.stringify(userProfileData['1key'])),
         '2key': JSON.parse(JSON.stringify(userProfileData['2key']))
     }
+
+    const recentActivity = await Recents.find({userID: session.user.id})
 
     return(
         <div className="w-full h-full flex flex-col gap-8">
@@ -63,7 +66,7 @@ async function ProfileContent(){
                 <ProfileContainer>
                     <ProfileContainer.Heading title={"Recent Activity"} />
                     <ProfileContainer.Content className="py-6">
-                        <RecentContainer/>
+                        <RecentContainer recentActivity={recentActivity}/>
                     </ProfileContainer.Content>
                 </ProfileContainer>
             </GridContainer>

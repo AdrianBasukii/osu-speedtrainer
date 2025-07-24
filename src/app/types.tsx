@@ -1,3 +1,5 @@
+import { ObjectId } from "mongoose"
+
 type statData = {
     bpmValue: number
     setAt: Date
@@ -35,4 +37,14 @@ export interface Results {
     totalTime: number
     consistency: number
     mode: string
+}
+
+export type recentActivity = {
+    userID: ObjectId
+    setDate: Date
+    mode: string
+    duration: number
+    clicks: number
+    bpm: number
+    consistency: number
 }
