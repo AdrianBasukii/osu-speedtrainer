@@ -185,16 +185,17 @@ export default function Home() {
           }))
 
           if(prev <= 0){
-
             let tl = Object.keys(bpmPerTimeRef.current).map(Number).filter((key) => key >= 0.98 && key <= configs.time && Number.isInteger(parseFloat(key.toFixed(2))))
             const bl = tl.map((key) => bpmPerTimeRef.current[key])
             tl = tl.map((key) => parseFloat(key.toFixed(1)))
+
+            const sum = bl.reduce((currBpm, i) => currBpm + i, 0)
 
             setResult({
               BPMList: bl,
               timeList: tl,
               peakBPM: Math.round(Math.max(...bl)),
-              avgBPM: (countRef.current*(60/configs.time))/(2*configs.keyNum),
+              avgBPM: Math.round(sum/bl.length),
               totalClicks: countRef.current,
               totalTime: configs.time
             })
@@ -229,11 +230,13 @@ export default function Home() {
             const bl = tl.map((key) => bpmPerTimeRef.current[key])
             tl = tl.map((key) => parseFloat(key.toFixed(1)))
 
+            const sum = bl.reduce((currBpm, i) => currBpm + i, 0)
+
             setResult({
               BPMList: bl,
               timeList: tl,
               peakBPM: Math.round(Math.max(...bl)),
-              avgBPM: parseFloat(((countRef.current*(60/prev))/(2*configs.keyNum)).toFixed(0)),
+              avgBPM: Math.round(sum/bl.length),
               totalClicks: countRef.current,
               totalTime: parseFloat(prev.toFixed(2))
             })
