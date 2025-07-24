@@ -25,3 +25,13 @@ export type bestKeyData = {
 export type personalBestType = {
     [key in `1key` | `2key`]: bestKeyData
 }
+
+export interface Results {
+    BPMList: number[],
+    timeList: number[],
+    peakBPM: number,
+    avgBPM: number,
+    totalClicks: number,
+    totalTime: number,
+    consistency: number
+}

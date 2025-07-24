@@ -1,8 +1,5 @@
 import mongoose from "mongoose"
 
-// 1. CHANGE AvgConsistency to TotalConsistency -> later in profile divide it by total test
-// 2. update the key data
-
 const statisticsSchema = new mongoose.Schema({
     "TotalTests": {type: Number, default: 0},
     "TimeTrained": {type: Number, default: 0},

@@ -7,6 +7,7 @@ import KeyButton from "./components/Home/KeyButton";
 import MeasurementDisplay from "./components/Home/MeasurementDisplay";
 import ResultDisplay from "./components/Home/ResultDisplay";
 import { useState, useEffect, useRef } from "react";
+import { Results } from "./types";
 
 export default function Home() {
   
@@ -120,15 +121,6 @@ export default function Home() {
   }, []);
 
   // Updating values
-
-  interface Results {
-    BPMList: number[],
-    timeList: number[],
-    peakBPM: number,
-    avgBPM: number,
-    totalClicks: number,
-    totalTime: number
-  }
   const [time, setTime] = useState<number>(0)
   const [BPMList, setBPMList] = useState<number[]>([])
   const [result, setResult] = useState<Results>({
@@ -137,7 +129,8 @@ export default function Home() {
     peakBPM: 0,
     avgBPM: 0,
     totalClicks: 0,
-    totalTime: 0
+    totalTime: 0,
+    consistency: 0
   })
   const gameStateRef = useRef(gameState)
 
@@ -162,8 +155,16 @@ export default function Home() {
       peakBPM: 0,
       avgBPM: 0,
       totalClicks: 0,
-      totalTime: 0
+      totalTime: 0,
+      consistency: 0
     })
+  }
+
+  function consistencyCalc(arr : number[], mean: number){
+    const sum = arr.reduce((i, curr) => i = i + Math.pow((curr - mean), 2), 0)
+    const sd = Math.sqrt(sum/arr.length)
+    const consistency = sd/mean * 100
+    return 100.0 - consistency
   }
 
   useEffect(() => {
@@ -189,15 +190,19 @@ export default function Home() {
             const bl = tl.map((key) => bpmPerTimeRef.current[key])
             tl = tl.map((key) => parseFloat(key.toFixed(1)))
 
-            const sum = bl.reduce((currBpm, i) => currBpm + i, 0)
+            const sum = bl.reduce((i, currBpm) => currBpm + i, 0)
+            const mean = sum/bl.length
+
+            const consistency = consistencyCalc(bl, mean)
 
             setResult({
               BPMList: bl,
               timeList: tl,
               peakBPM: Math.round(Math.max(...bl)),
-              avgBPM: Math.round(sum/bl.length),
+              avgBPM: Math.round(mean),
               totalClicks: countRef.current,
-              totalTime: configs.time
+              totalTime: configs.time,
+              consistency: Math.round(consistency)
             })
             setGameState("finished")
             clearInterval(interval)
@@ -230,7 +235,10 @@ export default function Home() {
             const bl = tl.map((key) => bpmPerTimeRef.current[key])
             tl = tl.map((key) => parseFloat(key.toFixed(1)))
 
-            const sum = bl.reduce((currBpm, i) => currBpm + i, 0)
+            const sum = bl.reduce((i, currBpm) => currBpm + i, 0)
+            const mean = sum/bl.length
+
+            const consistency = consistencyCalc(bl, mean)
 
             setResult({
               BPMList: bl,
@@ -238,7 +246,8 @@ export default function Home() {
               peakBPM: Math.round(Math.max(...bl)),
               avgBPM: Math.round(sum/bl.length),
               totalClicks: countRef.current,
-              totalTime: parseFloat(prev.toFixed(2))
+              totalTime: parseFloat(prev.toFixed(2)),
+              consistency: Math.round(consistency)
             })
             setGameState("finished")
             clearInterval(interval)
