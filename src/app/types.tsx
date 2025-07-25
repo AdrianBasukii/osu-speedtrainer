@@ -37,6 +37,7 @@ export interface Results {
     totalTime: number
     consistency: number
     mode: string
+    measurement: string
 }
 
 export type recentActivity = {

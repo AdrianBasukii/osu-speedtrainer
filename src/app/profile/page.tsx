@@ -49,7 +49,7 @@ async function ProfileContent(){
                     <ProfileContainer.Content className="grid grid-cols-none gap-6 md:gap-0 grid-rows-3 md:grid-rows-none md:grid-cols-3">
                         <Statistic title="Total Tests" content={userProfileData.statistics.TotalTests} className="text-center md:text-left"/>
                         <Statistic title="Time Trained" content={userProfileData.statistics.TimeTrained} className="text-center md:text-left"/>
-                        <Statistic title="Avg Consistency" content={`${userProfileData.statistics.TotalConsistency/userProfileData.statistics.TotalTests}%`} className="text-center md:text-left"/>
+                        <Statistic title="Avg Consistency" content={`${(userProfileData.statistics.TotalConsistency/userProfileData.statistics.TotalTests).toFixed(2)}%`} className="text-center md:text-left"/>
                     </ProfileContainer.Content>
                 </ProfileContainer>
             </GridContainer>

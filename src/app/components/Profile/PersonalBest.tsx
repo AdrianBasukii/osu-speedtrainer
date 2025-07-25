@@ -36,13 +36,14 @@ export default function PersonalBest({personalBestData}:{personalBestData: perso
                 {
                     Object.entries(selectedData).map((data, key) => (
                         <Statistic 
+                        className="text-center"
                         key={key} 
                         title={measurement === "Time" ? 
                             `${data[0].replace('s', '')} seconds` :
                             `${data[0]} clicks` }
                         
                         content={data[1].bpmValue ? `${data[1].bpmValue} BPM` : "-"}
-                        time={data[1].setAt ? formatDistanceToNow(data[1].setAt) : ""}
+                        time={data[1].setAt ? `${formatDistanceToNow(data[1].setAt)} ago` : ""}
                         />
                     )
                     )

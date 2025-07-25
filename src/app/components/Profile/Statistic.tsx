@@ -11,7 +11,7 @@ export default function Statistic({title, content, time, className} : Props){
             <div className={`flex flex-col gap-3 ${className}`}>
                 <p className="text-[#444444] font-medium">{title}</p>
                 <h1 className="text-3xl font-medium">{content ? content : "-"}</h1>
-                <p className="text-[#333333] font-medium">{time ? time : ""}</p>
+                <p className="text-sm text-[#444444] font-medium">{time ? time : ""}</p>
             </div>
         </div>
     )

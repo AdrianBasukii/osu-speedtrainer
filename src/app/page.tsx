@@ -131,7 +131,8 @@ export default function Home() {
     totalClicks: 0,
     totalTime: 0,
     consistency: 0,
-    mode: `${configs.keyNum} key`
+    mode: `${configs.keyNum} key`,
+    measurement: configs.selectedMeasurement
   }
   const [result, setResult] = useState<Results>(defaultResults)
   const gameStateRef = useRef(gameState)
@@ -197,7 +198,8 @@ export default function Home() {
               totalClicks: countRef.current,
               totalTime: configs.time,
               consistency: Math.round(consistency),
-              mode: `${configs.keyNum} key`
+              mode: `${configs.keyNum} key`,
+              measurement: configs.selectedMeasurement
             })
             setGameState("finished")
             clearInterval(interval)
@@ -243,7 +245,8 @@ export default function Home() {
               totalClicks: countRef.current,
               totalTime: parseFloat(prev.toFixed(2)),
               consistency: Math.round(consistency),
-              mode: `${configs.keyNum} key`
+              mode: `${configs.keyNum} key`,
+              measurement: configs.selectedMeasurement
             })
             setGameState("finished")
             clearInterval(interval)
