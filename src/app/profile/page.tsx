@@ -10,6 +10,7 @@ import User from "@/models/User"
 import Records from "@/models/Records"
 import Recents from "@/models/Recents"
 import { personalBestType } from "../types"
+import { intervalToDuration } from "date-fns"
 
 export default function Profile(){
     
@@ -37,6 +38,18 @@ async function ProfileContent(){
 
     const recentActivity = await Recents.find({userID: session.user.id}).sort({setDate: -1})
 
+    const timeTrainedData = userProfileData.statistics.TimeTrained
+    let timeTrained:string = `${timeTrainedData}s`
+
+    if(timeTrainedData > 3600){
+        const { hours, minutes } = intervalToDuration({start:0, end:timeTrainedData*1000})
+        timeTrained = `${hours}h ${minutes}m`
+    }
+    else if(timeTrainedData > 60){
+        const { minutes, seconds } = intervalToDuration({start:0, end:timeTrainedData*1000})
+        timeTrained = `${minutes}m ${seconds}s`
+    }
+
     return(
         <div className="w-full h-full flex flex-col gap-8">
 
@@ -48,7 +61,7 @@ async function ProfileContent(){
                 <ProfileContainer>
                     <ProfileContainer.Content className="grid grid-cols-none gap-6 md:gap-0 grid-rows-3 md:grid-rows-none md:grid-cols-3">
                         <Statistic title="Total Tests" content={userProfileData.statistics.TotalTests} className="text-center md:text-left"/>
-                        <Statistic title="Time Trained" content={userProfileData.statistics.TimeTrained} className="text-center md:text-left"/>
+                        <Statistic title="Time Trained" content={timeTrained} className="text-center md:text-left"/>
                         <Statistic title="Avg Consistency" content={`${(userProfileData.statistics.TotalConsistency/userProfileData.statistics.TotalTests).toFixed(2)}%`} className="text-center md:text-left"/>
                     </ProfileContainer.Content>
                 </ProfileContainer>

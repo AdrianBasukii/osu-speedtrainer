@@ -4,7 +4,7 @@ interface Props{
 
 function Settings({children} : Props){
     return(
-        <div className="w-full grid grid-rows-[1fr_3fr] md:grid-rows-none md:grid-cols-[1fr_3fr] gap-8">
+        <div className="w-full h-full grid grid-rows-[1fr_3fr] md:grid-rows-none md:grid-cols-[1fr_3fr] gap-8">
             {children}
         </div>
     )
@@ -12,7 +12,7 @@ function Settings({children} : Props){
 
 function SettingCategory({children} : Props){
     return(
-        <div className="w-full h-full rounded-xl bg-[#181818] flex justify-center p-6">
+        <div className="w-full h-fit rounded-xl bg-[#181818] flex flex-wrap justify-center p-6">
             <div className="flex flex-col gap-6">
                 {children}
             </div>
@@ -22,7 +22,7 @@ function SettingCategory({children} : Props){
 
 function SettingList({children} : Props){
     return(
-        <div className="w-full h-full rounded-xl bg-[#181818] p-6">
+        <div className="w-full rounded-xl bg-[#181818] p-6">
             {children}
         </div>
     )
