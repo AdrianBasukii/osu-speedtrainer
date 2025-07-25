@@ -1,5 +1,3 @@
-import Link from "next/link"
-
 interface Props{
     children: React.ReactNode
 }
@@ -24,14 +22,19 @@ function SettingCategory({children} : Props){
 
 function SettingList({children} : Props){
     return(
-        <div className="w-full h-full rounded-xl bg-[#181818]">
+        <div className="w-full h-full rounded-xl bg-[#181818] p-6">
             {children}
         </div>
     )
 }
 
+function SettingHeading({children} : Props){
+    return <h1 className="text-3xl text-[#444444] mb-6 font-semibold">{children}</h1>
+}
+
 Settings.Category = SettingCategory
 Settings.SettingList = SettingList
+Settings.Heading = SettingHeading
 
 
 export default Settings
