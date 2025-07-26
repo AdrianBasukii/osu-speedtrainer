@@ -65,6 +65,7 @@ export default function RecentContainer({recentActivity} : {recentActivity: rece
 
                 
             </table>
+            {recentActivity.length>5 &&
             <div className="w-full py-3 flex items-center justify-center">
                 <button onClick={() => handleShow()} className="flex items-center justify-center gap-3 text-sm text-[#444444] border-2 border-[#222222] px-4 py-1 rounded-full hover:cursor-pointer">
                     {!shown && "Show More"}
@@ -74,6 +75,7 @@ export default function RecentContainer({recentActivity} : {recentActivity: rece
                     </div>
                 </button>
             </div>
+            }
         </div>
     );
 }
