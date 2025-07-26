@@ -1,4 +1,14 @@
 "use client"
+import { toast } from "react-toastify"
+
+interface ConfigsData{
+    keyNum: number
+    keyOne: string
+    keyTwo: string
+    selectedMeasurement: string
+    time: number
+    clicks: number
+}
 
 function Configs({children} : {children: React.ReactNode}){
     return(
@@ -21,18 +31,37 @@ interface InputConfigProps{
     title: "Key 1" | "Key 2"
     keyVal: string
     status: boolean
+    configData: ConfigsData
     setConfig?: (a: string | number, b: string | number) => void
 }
 
-function InputConfig({title, keyVal, status, setConfig} : InputConfigProps){
+function InputConfig({title, keyVal, status, setConfig, configData} : InputConfigProps){
     const titleTranslation = {
         "Key 1": "keyOne",
         "Key 2": "keyTwo"
     };
 
     function handleUpdate(val: string){
+
+        const keyVal = val.slice(1).toUpperCase()
+
+        if((title === "Key 1" && configData.keyTwo === keyVal) || (title === "Key 2" && configData.keyOne === keyVal)){
+            toast.error('Key 1 and 2 cannot be the same!', {
+                toastId: 'key warning',
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
+            return
+        }
+
         if(setConfig){
-            setConfig(titleTranslation[title], val.slice(1).toUpperCase())
+            setConfig(titleTranslation[title], keyVal)
         }
     }
 
@@ -96,14 +125,7 @@ Configs.OptionsConfig = OptionsConfig
 
 interface ConfigPanelProps{
     setConfig?: (a: string | number, b: string | number) => void
-    configsData: {
-        keyNum: number
-        keyOne: string
-        keyTwo: string
-        selectedMeasurement: string
-        time: number
-        clicks: number
-    }
+    configsData: ConfigsData
 }
 
 function ConfigPanel({setConfig, configsData} : ConfigPanelProps){
@@ -111,8 +133,8 @@ function ConfigPanel({setConfig, configsData} : ConfigPanelProps){
         <>
         <Configs>
             <Configs.OptionsConfig title="Keys" setConfig={setConfig} options={[1, 2]} selected={configsData.keyNum}/>
-            <Configs.InputConfig title="Key 1" setConfig={setConfig} keyVal={configsData.keyOne} status={false}/>
-            <Configs.InputConfig title="Key 2" setConfig={setConfig} keyVal={configsData.keyTwo} status={configsData.keyNum === 1}/>
+            <Configs.InputConfig title="Key 1" configData={configsData} setConfig={setConfig} keyVal={configsData.keyOne} status={false}/>
+            <Configs.InputConfig title="Key 2" configData={configsData} setConfig={setConfig} keyVal={configsData.keyTwo} status={configsData.keyNum === 1}/>
         </Configs>
         <Configs>
             <Configs.OptionsConfig title="Measurement" setConfig={setConfig} options={["Time", "Clicks"]} selected={configsData.selectedMeasurement}/>
