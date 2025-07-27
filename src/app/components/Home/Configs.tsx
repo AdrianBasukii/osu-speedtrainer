@@ -1,5 +1,5 @@
 "use client"
-import { toast } from "react-toastify"
+import { toastFunc } from "../Layout/Toast"
 
 interface ConfigsData{
     keyNum: number
@@ -46,17 +46,7 @@ function InputConfig({title, keyVal, status, setConfig, configData} : InputConfi
         const keyVal = val.slice(1).toUpperCase()
 
         if((title === "Key 1" && configData.keyTwo === keyVal) || (title === "Key 2" && configData.keyOne === keyVal)){
-            toast.error('Key 1 and 2 cannot be the same!', {
-                toastId: 'key warning',
-                position: "bottom-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-            });
+            toastFunc("warning", 'Key 1 and 2 cannot be the same!', 'key warning')
             return
         }
 

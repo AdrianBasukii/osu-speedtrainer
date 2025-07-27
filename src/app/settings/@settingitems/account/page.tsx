@@ -1,10 +1,27 @@
 "use client"
-import { useState, useRef, useEffect } from "react"
+import { useState, useActionState, useEffect } from "react"
 import { AnimatePresence, motion } from "motion/react"
 import Settings from "@/app/components/Settings/Settings"
+import { handleUpdateName } from "@/app/actions/settingAction"
+import { toastFunc } from "@/app/components/Layout/Toast"
 
 export default function AccountPage(){
     const [popupStatus, setPopup] = useState<string>("none")
+    const [updateNameState, updateNameAction] = useActionState(handleUpdateName, null)
+
+    
+    useEffect(() => {
+
+        if(!updateNameState) return
+
+        if (!updateNameState.success){
+            toastFunc("error", updateNameState.message, 'name_error', 1500)
+
+        } else{
+            toastFunc("success", updateNameState.message, 'name_success')
+            handlePopup("none")
+        }
+    }, [updateNameState])
 
     function handlePopup(state: string){
         setPopup(state)
@@ -16,9 +33,18 @@ export default function AccountPage(){
 
             <AnimatedPopup isVisible={popupStatus === "updateName"} handleClose={handlePopup}>
                 <Settings.ItemHeading className="text-[#444444] font-medium">Type your new desired username</Settings.ItemHeading>
-                <form action="" className="w-full flex flex-col gap-4">
+                <form action={updateNameAction} className="w-full flex flex-col gap-4">
                     <input type="text" placeholder="New username" name="name" className="p-2 w-96 h-12 border-3 border-[#222222] bg-[#181818] rounded-md" autoComplete="off"/>
                     <button type="submit" className="p-2 w-96 h-12 bg-[#222222] font-medium rounded-md hover:cursor-pointer">Change</button>
+                </form>
+            </AnimatedPopup>
+
+            <AnimatedPopup isVisible={popupStatus === "resetPersonalBest"} handleClose={handlePopup}>
+                <Settings.ItemHeading className="text-[#444444] font-medium">Reset Personal Best</Settings.ItemHeading>
+                <Settings.ItemDesc className="text-[#e5e5e5] font-medium w-96">Warning: <span className="text-red-900">This action could not be undone</span>, please type <strong>'confirm'</strong> to reset your personal best records.</Settings.ItemDesc>
+                <form action="" className="w-full flex flex-col gap-4">
+                    <input type="text" placeholder="Your email" name="name" className="p-2 w-96 h-12 border-3 border-[#222222] bg-[#181818] rounded-md" autoComplete="off"/>
+                    <button type="submit" className="p-2 w-96 h-12 bg-[#222222] font-medium rounded-md hover:cursor-pointer">Reset</button>
                 </form>
             </AnimatedPopup>
 
@@ -31,6 +57,8 @@ export default function AccountPage(){
                 </form>
             </AnimatedPopup>
 
+            {/* Code */}
+
             <Settings.Heading>Account</Settings.Heading>
             <Settings.Item>
                 <Settings.TextContainer>
@@ -42,10 +70,10 @@ export default function AccountPage(){
 
             <Settings.Item>
                 <Settings.TextContainer>
-                    <Settings.ItemHeading>Change your username</Settings.ItemHeading>
-                    <Settings.ItemDesc>Choose a new username that fits you.</Settings.ItemDesc>
+                    <Settings.ItemHeading>Reset Personal Best</Settings.ItemHeading>
+                    <Settings.ItemDesc>Delete all your current personal best records. <span className="text-red-900">You can’t undo this action!</span></Settings.ItemDesc>
                 </Settings.TextContainer>
-                <Settings.Button onClick={() => handlePopup("updateName")}>Change</Settings.Button>
+                <Settings.Button onClick={() => handlePopup("resetPersonalBest")}>Reset</Settings.Button>
             </Settings.Item>
 
             <Settings.Item className="border-b-2">

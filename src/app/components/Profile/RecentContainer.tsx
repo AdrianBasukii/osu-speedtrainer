@@ -33,10 +33,11 @@ export default function RecentContainer({recentActivity} : {recentActivity: rece
                         <th className="bg-[#181818] border-t-2 border-b-2 border-r-2 rounded-r-xl border-[#444444] px-4">Created</th>
                     </tr>
                 </thead>
+                <AnimatePresence>
                 {recentActivity.length>0 ?
                     selectedActivity.map((data, key) => (
                     <tbody key={key}>
-                        <AnimatePresence>
+                        
                         <motion.tr 
                             className="text-left bg-[#222222] w-full h-12 mb-4 font-medium"
                             initial={{ opacity: 0, y: -20 }}
@@ -51,7 +52,6 @@ export default function RecentContainer({recentActivity} : {recentActivity: rece
                             <td>{data.bpm} BPM</td>
                             <td className="rounded-r-xl px-4 text-sm">{formatDistanceToNow(data.setDate)} ago</td>
                         </motion.tr>
-                        </AnimatePresence>
                     </tbody>
                     )) : 
                     <tbody>
@@ -62,7 +62,7 @@ export default function RecentContainer({recentActivity} : {recentActivity: rece
                         </tr>
                     </tbody>
                     } 
-
+                </AnimatePresence>
                 
             </table>
             {recentActivity.length>5 &&
