@@ -17,11 +17,20 @@ export default function AccountPage(){
     )
 
     const {
-        formAction: updateResetAction
+        formAction: handleResetAction
     } = useSettingAction(
         handleResetPB,
         "name_success",
         "name_error",
+        handlePopup
+    )
+
+    const {
+        formAction: handleDeleteAction
+    } = useSettingAction(
+        handleDeleteAccount,
+        "del_success",
+        "del_error",
         handlePopup
     )
 
@@ -45,7 +54,7 @@ export default function AccountPage(){
             <AnimatedPopup isVisible={popupStatus === "resetPersonalBest"} handleClose={handlePopup}>
                 <Settings.ItemHeading className="text-[#444444] font-medium">Reset Personal Best</Settings.ItemHeading>
                 <Settings.ItemDesc className="text-[#e5e5e5] font-medium w-96">Warning: <span className="text-red-900">This action could not be undone</span>, please type <strong>'confirm'</strong> to reset your personal best records.</Settings.ItemDesc>
-                <form action={updateResetAction} className="w-full flex flex-col gap-4">
+                <form action={handleResetAction} className="w-full flex flex-col gap-4">
                     <input type="text" placeholder="Your email" name="confirm" className="p-2 w-96 h-12 border-3 border-[#222222] bg-[#181818] rounded-md" autoComplete="off"/>
                     <button type="submit" className="p-2 w-96 h-12 bg-[#222222] font-medium rounded-md hover:cursor-pointer">Reset</button>
                 </form>
@@ -54,8 +63,8 @@ export default function AccountPage(){
             <AnimatedPopup isVisible={popupStatus === "deleteAccount"} handleClose={handlePopup}>
                 <Settings.ItemHeading className="text-[#444444] font-medium">Delete your account</Settings.ItemHeading>
                 <Settings.ItemDesc className="text-[#e5e5e5] font-medium w-96">Warning: <span className="text-red-900">This action could not be undone</span>, please type in your account email to confirm account deletion</Settings.ItemDesc>
-                <form action="" className="w-full flex flex-col gap-4">
-                    <input type="text" placeholder="Your email" name="delete" className="p-2 w-96 h-12 border-3 border-[#222222] bg-[#181818] rounded-md" autoComplete="off"/>
+                <form action={handleDeleteAction} className="w-full flex flex-col gap-4">
+                    <input type="text" placeholder="Your email" name="yourEmail" className="p-2 w-96 h-12 border-3 border-[#222222] bg-[#181818] rounded-md" autoComplete="off"/>
                     <button type="submit" className="p-2 w-96 h-12 bg-red-900 font-medium rounded-md hover:cursor-pointer">Delete</button>
                 </form>
             </AnimatedPopup>

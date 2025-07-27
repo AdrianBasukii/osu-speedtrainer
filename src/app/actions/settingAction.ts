@@ -1,5 +1,6 @@
 "use server"
-import { auth } from "@/lib/auth"
+import { auth, signOut } from "@/lib/auth"
+import { disconnectDB } from "@/lib/db"
 import User from "@/models/User"
 import Records from "@/models/Records"
 
@@ -87,5 +88,30 @@ export async function handleResetPB(prevState: any, formData: FormData){
 }
 
 export async function handleDeleteAccount(prevState: any, formData: FormData){
+    const session = await auth()
+    const email = formData.get("yourEmail") as string
 
+    if(!session || !session.user){
+        return{
+            success: false,
+            message: "User not logged in"
+        }
+    }
+
+    if(email === "" || email !== session.user.email){
+        console.log(session.user)
+        return{
+            success: false,
+            message: "Emails do not match!"
+        }
+    } else{
+        await User.findByIdAndDelete(session.user.id)
+        await Records.findOneAndDelete({userID: session.user.id})
+        disconnectDB()
+        await signOut({redirectTo: '/'})
+        return{
+            success: true,
+            message: "Account Deleted!"
+        }
+    }
 }
