@@ -1,3 +1,6 @@
+"use client"
+import { useRef, useEffect } from "react"
+
 interface Props{
     children: React.ReactNode
 }
@@ -10,7 +13,7 @@ function Settings({children} : Props){
     )
 }
 
-function SettingCategory({children} : Props){
+export function SettingCategory({children} : Props){
     return(
         <div className="w-full h-fit rounded-xl bg-[#181818] flex flex-wrap justify-center p-6">
             <div className="flex flex-col gap-6">
@@ -20,7 +23,7 @@ function SettingCategory({children} : Props){
     )
 }
 
-function SettingList({children} : Props){
+export function SettingList({children} : Props){
     return(
         <div className="w-full rounded-xl bg-[#181818] p-6">
             {children}
@@ -28,13 +31,14 @@ function SettingList({children} : Props){
     )
 }
 
-function SettingHeading({children} : Props){
-    return <h1 className="text-3xl text-[#444444] mb-6 font-semibold">{children}</h1>
-}
-
 interface ClassProps extends Props{
     className?: string
 }
+
+function SettingHeading({children, className} : ClassProps){
+    return <h1 className={`text-3xl text-[#444444] mb-6 font-semibold ${className}`}>{children}</h1>
+}
+
 function SettingItem({children, className} : ClassProps){
     return(
         <div className={`w-full h-24 p-3 border-[#222222] border-t-2 ${className} flex justify-between`}>
@@ -51,33 +55,69 @@ function SettingTextContainer({children}:Props){
     )
 }
 
-function SettingItemHeading({children}:Props){
+function SettingItemHeading({children, className} : ClassProps){
     return(
-        <h1 className="text-xl">
+        <h1 className={`text-xl ${className}`}>
             {children}
         </h1>
     )
 }
 
-function SettingItemDescription({children}:Props){
+function SettingItemDescription({children, className} : ClassProps){
     return(
-        <p className="text-[#444444]">
+        <p className={`text-[#444444] ${className}`}>
             {children}
         </p>
     )
 }
 
-function SettingButton({children, className} : ClassProps){
-    return <button className={`hover:cursor-pointer font-medium ${className}`}>{children}</button>
+interface ButtonProps extends ClassProps{
+    onClick: () => void
 }
 
-Settings.Category = SettingCategory
-Settings.SettingList = SettingList
+function SettingButton({children, className, onClick} : ButtonProps){
+    return <button className={`hover:cursor-pointer font-medium ${className}`} onClick={onClick}>{children}</button>
+}
+
+interface PopupProps extends Props{
+    handleState: () => void
+}
+
+function SettingPopup({children, handleState} : PopupProps){
+
+    const popupRef = useRef<HTMLDivElement>(null)
+    useEffect(() => {
+        function clickOutsideHandler(event: MouseEvent) {
+            if (
+                popupRef.current &&
+                event.target instanceof Node &&
+                !popupRef.current.contains(event.target)
+            ) {
+                handleState();
+            }
+        }
+
+        document.addEventListener("mousedown", clickOutsideHandler)
+
+        return () => {
+            document.removeEventListener("mousedown", clickOutsideHandler)
+        };
+    }, [popupRef])
+    return(
+        <div className="w-full h-full absolute top-0 left-0 z-20 bg-black/50 flex items-center justify-center">
+            <div ref={popupRef} className="p-4 bg-[#111111] border-3 border-[#222222] rounded-lg flex flex-col gap-8">
+                {children}
+            </div>
+        </div>
+    )
+}
+
 Settings.Heading = SettingHeading
 Settings.Item = SettingItem
 Settings.ItemHeading = SettingItemHeading
 Settings.ItemDesc = SettingItemDescription
 Settings.TextContainer = SettingTextContainer
 Settings.Button = SettingButton
+Settings.Popup = SettingPopup
 
 export default Settings

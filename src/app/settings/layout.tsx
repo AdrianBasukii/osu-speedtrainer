@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth"
 import { notFound } from "next/navigation"
 import Settings from "@/app/components/Settings/Settings"
+import { SettingCategory, SettingList } from "@/app/components/Settings/Settings"
 import React from "react"
 
 export default async function SettingsLayout({category, settingitems} : {category: React.ReactNode, settingitems: React.ReactNode}){
@@ -12,8 +13,8 @@ export default async function SettingsLayout({category, settingitems} : {categor
 
     return(
         <Settings>
-            <Settings.Category>{category}</Settings.Category>
-            <Settings.SettingList>{settingitems}</Settings.SettingList>
+            <SettingCategory>{category}</SettingCategory>
+            <SettingList>{settingitems}</SettingList>
         </Settings>
     )
 }
