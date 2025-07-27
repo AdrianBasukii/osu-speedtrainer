@@ -1,27 +1,30 @@
 "use client"
-import { useState, useActionState, useEffect } from "react"
+import { useState } from "react"
 import { AnimatePresence, motion } from "motion/react"
 import Settings from "@/app/components/Settings/Settings"
-import { handleUpdateName } from "@/app/actions/settingAction"
-import { toastFunc } from "@/app/components/Layout/Toast"
+import { handleUpdateName, handleResetPB, handleDeleteAccount } from "@/app/actions/settingAction"
+import { useSettingAction } from "@/app/utils/settings/useSettingAction"
 
 export default function AccountPage(){
     const [popupStatus, setPopup] = useState<string>("none")
-    const [updateNameState, updateNameAction] = useActionState(handleUpdateName, null)
+    const {
+        formAction: updateNameAction
+    } = useSettingAction(
+        handleUpdateName,
+        "name_success",
+        "name_error",
+        handlePopup
+    )
 
-    
-    useEffect(() => {
+    const {
+        formAction: updateResetAction
+    } = useSettingAction(
+        handleResetPB,
+        "name_success",
+        "name_error",
+        handlePopup
+    )
 
-        if(!updateNameState) return
-
-        if (!updateNameState.success){
-            toastFunc("error", updateNameState.message, 'name_error', 1500)
-
-        } else{
-            toastFunc("success", updateNameState.message, 'name_success')
-            handlePopup("none")
-        }
-    }, [updateNameState])
 
     function handlePopup(state: string){
         setPopup(state)
@@ -42,8 +45,8 @@ export default function AccountPage(){
             <AnimatedPopup isVisible={popupStatus === "resetPersonalBest"} handleClose={handlePopup}>
                 <Settings.ItemHeading className="text-[#444444] font-medium">Reset Personal Best</Settings.ItemHeading>
                 <Settings.ItemDesc className="text-[#e5e5e5] font-medium w-96">Warning: <span className="text-red-900">This action could not be undone</span>, please type <strong>'confirm'</strong> to reset your personal best records.</Settings.ItemDesc>
-                <form action="" className="w-full flex flex-col gap-4">
-                    <input type="text" placeholder="Your email" name="name" className="p-2 w-96 h-12 border-3 border-[#222222] bg-[#181818] rounded-md" autoComplete="off"/>
+                <form action={updateResetAction} className="w-full flex flex-col gap-4">
+                    <input type="text" placeholder="Your email" name="confirm" className="p-2 w-96 h-12 border-3 border-[#222222] bg-[#181818] rounded-md" autoComplete="off"/>
                     <button type="submit" className="p-2 w-96 h-12 bg-[#222222] font-medium rounded-md hover:cursor-pointer">Reset</button>
                 </form>
             </AnimatedPopup>
@@ -52,7 +55,7 @@ export default function AccountPage(){
                 <Settings.ItemHeading className="text-[#444444] font-medium">Delete your account</Settings.ItemHeading>
                 <Settings.ItemDesc className="text-[#e5e5e5] font-medium w-96">Warning: <span className="text-red-900">This action could not be undone</span>, please type in your account email to confirm account deletion</Settings.ItemDesc>
                 <form action="" className="w-full flex flex-col gap-4">
-                    <input type="text" placeholder="Your email" name="name" className="p-2 w-96 h-12 border-3 border-[#222222] bg-[#181818] rounded-md" autoComplete="off"/>
+                    <input type="text" placeholder="Your email" name="delete" className="p-2 w-96 h-12 border-3 border-[#222222] bg-[#181818] rounded-md" autoComplete="off"/>
                     <button type="submit" className="p-2 w-96 h-12 bg-red-900 font-medium rounded-md hover:cursor-pointer">Delete</button>
                 </form>
             </AnimatedPopup>

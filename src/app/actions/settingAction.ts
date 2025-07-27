@@ -3,7 +3,7 @@ import { auth } from "@/lib/auth"
 import User from "@/models/User"
 import Records from "@/models/Records"
 
-export async function handleUpdateName(currentState: any, formData: FormData){
+export async function handleUpdateName(prevState: any, formData: FormData){
     const session = await auth()
     const newName = formData.get("name") as string
 
@@ -35,10 +35,57 @@ export async function handleUpdateName(currentState: any, formData: FormData){
     }
 }
 
-export async function handleResetPB({ formData } : {formData: FormData}){
+const defaultBpm = {
+    bpmValue: 0,
+    setAt: undefined
+}
+const defaultTime = {
+    '5s': defaultBpm,
+    '10s': defaultBpm,
+    '15s': defaultBpm,
+    '20s': defaultBpm
+}
+const defaultClicks = {
+    '50': defaultBpm,
+    '100': defaultBpm,
+    '150': defaultBpm,
+    '200': defaultBpm
+}
+const defaultValues = {
+    time: defaultTime,
+    clicks: defaultClicks
+}
+
+export async function handleResetPB(prevState: any, formData: FormData){
+    const session = await auth()
+    const confirmation = formData.get("confirm") as string
+
+    if(confirmation === "" || confirmation !== "confirm"){
+        return {
+            success: false,
+            message: (confirmation === "") ? "Please type Confirm in the input box!" : "Please recheck your spelling!"
+        }
+    }
+
+    if(session && session.user){
+        await Records.findOneAndUpdate(
+            {userID: session.user.id},
+            {
+                $set:{
+                    '1key': defaultValues,
+                    '2key': defaultValues
+                }
+            }
+        )
+
+        return {
+            success: true,
+            message: 'Personal bests reset successfully!',
+        }
+    }
 
 }
 
-export async function handleDeleteAccount({ formData } : {formData: FormData}){
+export async function handleDeleteAccount(prevState: any, formData: FormData){
 
 }
