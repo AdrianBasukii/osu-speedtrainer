@@ -4,7 +4,12 @@ import { disconnectDB } from "@/lib/db"
 import User from "@/models/User"
 import Records from "@/models/Records"
 
-export async function handleUpdateName(prevState: any, formData: FormData){
+type prevState = {
+  success: boolean
+  message: string
+} | null
+
+export async function handleUpdateName(_prevState: prevState, formData: FormData){
     const session = await auth()
     const newName = formData.get("name") as string
 
@@ -57,7 +62,7 @@ const defaultValues = {
     clicks: defaultClicks
 }
 
-export async function handleResetPB(prevState: any, formData: FormData){
+export async function handleResetPB(_prevState: prevState, formData: FormData){
     const session = await auth()
     const confirmation = formData.get("confirm") as string
 
@@ -85,9 +90,13 @@ export async function handleResetPB(prevState: any, formData: FormData){
         }
     }
 
+    return {
+        success: false,
+        message: 'User not logged in!',
+    }
 }
 
-export async function handleDeleteAccount(prevState: any, formData: FormData){
+export async function handleDeleteAccount(_prevState: prevState, formData: FormData){
     const session = await auth()
     const email = formData.get("yourEmail") as string
 

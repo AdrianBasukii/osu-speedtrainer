@@ -1,15 +1,8 @@
-import NextAuth, { type DefaultSession } from "next-auth"
+import NextAuth from "next-auth"
 import User from "@/models/User"
 import Records from "@/models/Records"
 import Google from "next-auth/providers/google"
-import { ObjectId } from "mongoose"
 import { connectDB } from "./db"
-
-interface Session {
-  user: {
-    id: ObjectId
-  } & DefaultSession["user"]
-}
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   providers: [Google],

@@ -4,10 +4,10 @@ import { toastFunc } from "@/app/components/Layout/Toast"
 type ActionResponse = {
   success: boolean
   message: string
-} | undefined
+} | undefined | null
 
 export function useSettingAction<T extends ActionResponse>(
-    actionFn: (prevState: any, formData: FormData) => Promise<T>,
+    actionFn: (_prevState: T | null, formData: FormData) => Promise<T>,
     successId: string,
     errorId: string,
     onSuccess: (value: string)=>void
