@@ -25,7 +25,6 @@ async function fetchColorData() {
   if (!session || !session.user) {
     return
   }
-  console.log("Session User:", session.user);
   return session.user.colorScheme || "dark";
 }
 
@@ -36,8 +35,6 @@ export default async function RootLayout({
 }>) {
 
   const colorData = await fetchColorData()
-
-  console.log("Color Data:", colorData);
 
   return (
     <html lang="en">

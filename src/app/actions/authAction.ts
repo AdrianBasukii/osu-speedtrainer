@@ -21,8 +21,6 @@ export async function handleSubmitActivity(resultData: Results){
         return
     }
 
-    console.log(resultData)
-
     await Recents.create({
         userID: session.user.id,
         setDate: Date.now(),

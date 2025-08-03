@@ -108,7 +108,6 @@ export async function handleDeleteAccount(_prevState: prevState, formData: FormD
     }
 
     if(email === "" || email !== session.user.email){
-        console.log(session.user)
         return{
             success: false,
             message: "Emails do not match!"
