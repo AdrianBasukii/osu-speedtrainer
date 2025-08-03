@@ -34,7 +34,8 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         user: {
           ...session.user,
           name: existingUser.name,
-          id: existingUser._id
+          id: existingUser._id,
+          colorScheme: existingUser.colorScheme || "dark"
         }
       }
     }

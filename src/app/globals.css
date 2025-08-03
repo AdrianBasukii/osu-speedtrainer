@@ -67,8 +67,6 @@
   --color-text-primary: var(--color-text-primary);
 }
 
-/* react toastify */
-
 .Toastify__close-button {
   color: var(--toastify-close-color) !important;
 }

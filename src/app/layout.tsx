@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { auth } from "@/lib/auth"
 import { Geist, Geist_Mono } from "next/font/google";
 import MainContainer from "./components/Layout/MainContainer";
 import { ToastContainer } from "react-toastify";
@@ -19,15 +20,29 @@ export const metadata: Metadata = {
   description: "Train your streaming or singletapping speed",
 };
 
-export default function RootLayout({
+async function fetchColorData() {
+  const session = await auth();
+  if (!session || !session.user) {
+    return
+  }
+  console.log("Session User:", session.user);
+  return session.user.colorScheme || "dark";
+}
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const colorData = await fetchColorData()
+
+  console.log("Color Data:", colorData);
+
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} light bg-bg-primary text-text-primary antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${colorData ? colorData : "dark"} dark bg-bg-primary text-text-primary antialiased`}
       >
         <ToastContainer/>
         <MainContainer>
