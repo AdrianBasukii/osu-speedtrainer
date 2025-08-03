@@ -41,15 +41,15 @@ function SettingHeading({children, className} : ClassProps){
 
 function SettingItem({children, className} : ClassProps){
     return(
-        <div className={`w-full h-24 p-3 border-bg-tertiary border-t-2 ${className} flex justify-between`}>
+        <div className={`w-full min-h-24 p-3 border-bg-tertiary border-t-2 ${className} flex justify-between`}>
             {children}
         </div>
     )
 }
 
-function SettingTextContainer({children}:Props){
+function SettingTextContainer({children, className} : ClassProps){
     return(
-        <div className="flex flex-col gap-3">
+        <div className={`flex flex-col gap-3 ${className}`}>
             {children}
         </div>
     )

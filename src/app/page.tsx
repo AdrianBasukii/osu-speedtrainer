@@ -82,7 +82,7 @@ export default function Home() {
       return; 
     }
     if (e.key.toLowerCase() === keyRef.current.keyOne.toLowerCase() && gameStateRef.current === "running" || gameStateRef.current === "waiting") {
-      setButtonColor1("border-white");
+      setButtonColor1("border-text-primary");
       setCount(prev => {
         const newCount = prev + 1;
         countRef.current = newCount; 
@@ -92,7 +92,7 @@ export default function Home() {
     }
 
     if (e.key.toLowerCase() === keyRef.current.keyTwo.toLowerCase() && keyRef.current.keyNum > 1 && gameStateRef.current === "running" || gameStateRef.current === "waiting") {
-      setButtonColor2("border-white");
+      setButtonColor2("border-text-primary");
       setCount(prev => {
         const newCount = prev + 1;
         countRef.current = newCount; 
