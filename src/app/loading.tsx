@@ -10,7 +10,7 @@ function LoadingDisplay(){
         <BarLoader
           height={8}
           width={128}
-          color="#e5e5e5"
+          color="var(--color-text-primary)"
           cssOverride={{
             borderRadius: '20px'
           }}

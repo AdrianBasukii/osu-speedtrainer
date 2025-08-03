@@ -10,19 +10,19 @@ export default function Chart({BPMList, timeList} : {BPMList: number[], timeList
                 tickMinStep: 1,
                 disableTicks: true,
                 label: "Time",
-                labelStyle: { fill: '#333333', fontSize: 16, fontWeight: 700 }
+                labelStyle: { fill: 'var(--color-accent-primary)', fontSize: 16, fontWeight: 700 }
             }]}
 
             yAxis={[{ 
                 label: "BPM",
                 disableTicks: true,
-                labelStyle: { fill: '#333333', fontSize: 16, fontWeight: 700 }
+                labelStyle: { fill: 'var(--color-accent-primary)', fontSize: 16, fontWeight: 700 }
             }]}
 
             series={[
                 {
                 data: BPMList,
-                color: '#e5e5e5',
+                color: 'var(--color-text-primary)',
                 showMark: false,
                 },
             ]}
@@ -31,13 +31,13 @@ export default function Chart({BPMList, timeList} : {BPMList: number[], timeList
                 tooltip: {
                 sx: {
                     [`&.${chartsTooltipClasses.root} .${chartsTooltipClasses.paper}`]: {
-                        bgcolor: '#222222',
-                        borderColor: '#333333',
-                        color: '#e5e5e5'
+                        bgcolor: 'var(--color-bg-tertiary)',
+                        borderColor: 'var(--color-accent-primary)',
+                        color: 'var(--color-text-primary)'
                     },
                     [`&.${chartsTooltipClasses.root} .${chartsTooltipClasses.cell}`]: {
-                        bgcolor: '#222222',
-                        color: '#e5e5e5'
+                        bgcolor: 'var(--color-bg-tertiary)',
+                        color: 'var(--color-text-primary)'
                     },
                 },
                 },
@@ -53,13 +53,13 @@ export default function Chart({BPMList, timeList} : {BPMList: number[], timeList
             
             sx={{
                 '& .MuiChartsAxis-root .MuiChartsAxis-line': {
-                stroke: '#333333', 
+                stroke: 'var(--color-accent-primary)', 
                 },
                 '& .MuiChartsGrid-line': {
-                stroke: '#333333', // grid lines
+                stroke: 'var(--color-accent-primary)', // grid lines
                 },
                 '& .MuiChartsAxis-root .MuiChartsAxis-tickLabel': {
-                fill: '#444444', 
+                fill: 'var(--color-accent-secondary)', 
                 },
             }}
         />
