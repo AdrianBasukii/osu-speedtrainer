@@ -40,7 +40,7 @@ export default function ProfileDropdown({options, onClick, value} : SelectProps)
         <div 
             onClick={handleDropdown}
             ref={dropdownRef}
-            className="w-full px-3 py-2 border-2 border-[#222222] rounded-md font-medium text-[#444444] 
+            className="w-full px-3 py-2 border-2 border-bg-tertiary rounded-md font-medium text-accent-secondary 
             hover:cursor-pointer transition-all flex justify-between">
             <p className='max-w-2/3 h-full flex items-center gap-2 truncate'>
                 {value}
@@ -57,10 +57,10 @@ export default function ProfileDropdown({options, onClick, value} : SelectProps)
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.1}}
                 exit={{ opacity: 0, y: -5}}
-                className='absolute z-15 w-full border-2 border-[#222222] bg-[#181818] mt-1 rounded-md'>
+                className='absolute z-15 w-full border-2 border-bg-tertiary bg-bg-secondary mt-1 rounded-md'>
 
             
-                <div className={`w-full px-3 py-3 text-[#444444] font-medium hover:bg-[#222222] hover:cursor-pointer flex flex-col`}>
+                <div className={`w-full px-3 py-3 text-accent-secondary font-medium hover:bg-bg-tertiary hover:cursor-pointer flex flex-col`}>
                     <button 
                     onClick={() => onClick(options[0])}
                     type="submit"
@@ -69,7 +69,7 @@ export default function ProfileDropdown({options, onClick, value} : SelectProps)
                     </button>
                 </div>
 
-                <div className={`w-full px-3 py-3 text-[#444444] font-medium hover:bg-[#222222] hover:cursor-pointer flex flex-col`}>
+                <div className={`w-full px-3 py-3 text-accent-secondary font-medium hover:bg-bg-tertiary hover:cursor-pointer flex flex-col`}>
                     <button 
                     onClick={() => onClick(options[1])}
                     type="submit"

@@ -6,7 +6,7 @@ interface Props{
 
 function ProfileContainer({children} : Props){
     return(
-        <div className="w-full h-full bg-[#181818] rounded-md py-4 px-6 flex flex-col">
+        <div className="w-full h-full bg-bg-secondary rounded-md py-4 px-6 flex flex-col">
             {children}
         </div>
     )
@@ -16,7 +16,7 @@ function ProfileHeading({children, title} : Props){
     return(
         <div className="grid grid-cols-2">
             <div>
-                {title && <h1 className="w-full font-medium text-3xl text-[#444444]">{title}</h1>}
+                {title && <h1 className="w-full font-medium text-3xl text-accent-secondary">{title}</h1>}
             </div>
             <div className="w-full flex justify-end gap-3">
                 {children}

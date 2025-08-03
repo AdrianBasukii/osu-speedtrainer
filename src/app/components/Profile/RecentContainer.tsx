@@ -25,12 +25,12 @@ export default function RecentContainer({recentActivity} : {recentActivity: rece
             <table className="w-full table-fixed border-separate border-spacing-y-3">
                 <thead className="sticky top-0">
                     <tr className="text-left h-12">
-                        <th className="bg-[#181818] border-t-2 border-b-2 border-l-2 rounded-l-xl border-[#444444] px-4">Consistency</th>
-                        <th className="bg-[#181818] border-t-2 border-b-2 border-[#444444]">Mode</th>
-                        <th className="bg-[#181818] border-t-2 border-b-2 border-[#444444]">Duration</th>
-                        <th className="bg-[#181818] border-t-2 border-b-2 border-[#444444]">Clicks</th>
-                        <th className="bg-[#181818] border-t-2 border-b-2 border-[#444444]">BPM</th>
-                        <th className="bg-[#181818] border-t-2 border-b-2 border-r-2 rounded-r-xl border-[#444444] px-4">Created</th>
+                        <th className="bg-bg-secondary border-t-2 border-b-2 border-l-2 rounded-l-xl border-accent-secondary px-4">Consistency</th>
+                        <th className="bg-bg-secondary border-t-2 border-b-2 border-accent-secondary">Mode</th>
+                        <th className="bg-bg-secondary border-t-2 border-b-2 border-accent-secondary">Duration</th>
+                        <th className="bg-bg-secondary border-t-2 border-b-2 border-accent-secondary">Clicks</th>
+                        <th className="bg-bg-secondary border-t-2 border-b-2 border-accent-secondary">BPM</th>
+                        <th className="bg-bg-secondary border-t-2 border-b-2 border-r-2 rounded-r-xl border-accent-secondary px-4">Created</th>
                     </tr>
                 </thead>
                 <AnimatePresence>
@@ -39,7 +39,7 @@ export default function RecentContainer({recentActivity} : {recentActivity: rece
                     <tbody key={key}>
                         
                         <motion.tr 
-                            className="text-left bg-[#222222] w-full h-12 mb-4 font-medium"
+                            className="text-left bg-bg-tertiary w-full h-12 mb-4 font-medium"
                             initial={{ opacity: 0, y: -20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.2}}
@@ -56,7 +56,7 @@ export default function RecentContainer({recentActivity} : {recentActivity: rece
                     )) : 
                     <tbody>
                         <tr>
-                        <td className="font-medium text-xl text-[#444444] text-center h-24" colSpan={6}>
+                        <td className="font-medium text-xl text-accent-secondary text-center h-24" colSpan={6}>
                             No Recent Activity
                         </td>
                         </tr>
@@ -67,7 +67,7 @@ export default function RecentContainer({recentActivity} : {recentActivity: rece
             </table>
             {recentActivity.length>5 &&
             <div className="w-full py-3 flex items-center justify-center">
-                <button onClick={() => handleShow()} className="flex items-center justify-center gap-3 text-sm text-[#444444] border-2 border-[#222222] px-4 py-1 rounded-full hover:cursor-pointer">
+                <button onClick={() => handleShow()} className="flex items-center justify-center gap-3 text-sm text-accent-secondary border-2 border-bg-tertiary px-4 py-1 rounded-full hover:cursor-pointer">
                     {!shown && "Show More"}
                     {shown && "Show Less"}
                     <div className={`transition-all ${shown ? 'rotate-180' : ''}`}>

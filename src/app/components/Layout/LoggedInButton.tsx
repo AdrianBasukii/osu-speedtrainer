@@ -41,7 +41,7 @@ export default function LoggedInButton({children}: {children: React.ReactNode}){
             <div 
             ref={dropdownRef}
             onClick={handleDropdown}
-            className="w-full px-3 py-2 bg-[#181818] rounded-md font-medium text-[#444444] 
+            className="w-full px-3 py-2 bg-bg-secondary rounded-md font-medium text-accent-secondary 
             hover:cursor-pointer transition-all flex justify-between">
                 <p className='max-w-2/3 h-full flex items-center gap-2 truncate'>
                     <PermIdentityIcon sx={{fontSize: 20}}/>
@@ -60,17 +60,17 @@ export default function LoggedInButton({children}: {children: React.ReactNode}){
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.1}}
                     exit={{ opacity: 0, y: -5}}
-                    className='absolute z-15 w-full bg-[#181818] mt-1 rounded-md'>
+                    className='absolute z-15 w-full bg-bg-secondary mt-1 rounded-md'>
 
-                    <DropdownItem href="/" className='rounded-t-md border-b border-[#222222]'>
+                    <DropdownItem href="/" className='rounded-t-md border-b border-bg-tertiary'>
                         <HomeIcon sx={{fontSize: 20}}/>
                         Home
                     </DropdownItem>
-                    <DropdownItem href="/profile" className='border-b border-[#222222]'>
+                    <DropdownItem href="/profile" className='border-b border-bg-tertiary'>
                         <PersonIcon sx={{fontSize: 20}}/>
                         Profile
                     </DropdownItem>
-                    <DropdownItem href="/settings" className='border-b border-[#222222]'>
+                    <DropdownItem href="/settings" className='border-b border-bg-tertiary'>
                         <SettingsIcon sx={{fontSize: 20}}/>
                         Settings
                     </DropdownItem>
@@ -96,7 +96,7 @@ interface DropdownProps{
 function DropdownItem({href, action, children, className} : DropdownProps){ 
 
     return(
-        <div className={`w-full px-3 py-3 text-[#444444] font-medium hover:bg-[#222222] hover:cursor-pointer flex flex-col ${className}`}>
+        <div className={`w-full px-3 py-3 text-accent-secondary font-medium hover:bg-bg-tertiary hover:cursor-pointer flex flex-col ${className}`}>
             {href && 
             <Link href={href} className='flex gap-2 items-center'>
                 {children}

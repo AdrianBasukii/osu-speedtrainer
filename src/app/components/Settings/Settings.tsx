@@ -15,7 +15,7 @@ function Settings({children} : Props){
 
 export function SettingCategory({children} : Props){
     return(
-        <div className="w-full h-fit rounded-xl bg-[#181818] flex flex-wrap justify-center p-6">
+        <div className="w-full h-fit rounded-xl bg-bg-secondary flex flex-wrap justify-center p-6">
             <div className="flex flex-col gap-6">
                 {children}
             </div>
@@ -25,7 +25,7 @@ export function SettingCategory({children} : Props){
 
 export function SettingList({children} : Props){
     return(
-        <div className="w-full rounded-xl bg-[#181818] p-6">
+        <div className="w-full rounded-xl bg-bg-secondary p-6">
             {children}
         </div>
     )
@@ -36,12 +36,12 @@ interface ClassProps extends Props{
 }
 
 function SettingHeading({children, className} : ClassProps){
-    return <h1 className={`text-3xl text-[#444444] mb-6 font-semibold ${className}`}>{children}</h1>
+    return <h1 className={`text-3xl text-accent-secondary mb-6 font-semibold ${className}`}>{children}</h1>
 }
 
 function SettingItem({children, className} : ClassProps){
     return(
-        <div className={`w-full h-24 p-3 border-[#222222] border-t-2 ${className} flex justify-between`}>
+        <div className={`w-full h-24 p-3 border-bg-tertiary border-t-2 ${className} flex justify-between`}>
             {children}
         </div>
     )
@@ -65,7 +65,7 @@ function SettingItemHeading({children, className} : ClassProps){
 
 function SettingItemDescription({children, className} : ClassProps){
     return(
-        <p className={`text-[#444444] ${className}`}>
+        <p className={`text-accent-secondary ${className}`}>
             {children}
         </p>
     )
@@ -105,7 +105,7 @@ function SettingPopup({children, handleState} : PopupProps){
     }, [popupRef])
     return(
         <div className="w-full h-full absolute top-0 left-0 z-20 bg-black/50 flex items-center justify-center">
-            <div ref={popupRef} className="p-4 bg-[#111111] border-3 border-[#222222] rounded-lg flex flex-col gap-8">
+            <div ref={popupRef} className="p-4 bg-bg-primary border-3 border-bg-tertiary rounded-lg flex flex-col gap-8">
                 {children}
             </div>
         </div>
