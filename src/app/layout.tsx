@@ -42,7 +42,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${colorData ? colorData : "dark"} dark bg-bg-primary text-text-primary antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${colorData ? colorData : "dark"} bg-bg-primary text-text-primary antialiased`}
       >
         <ToastContainer/>
         <MainContainer>
