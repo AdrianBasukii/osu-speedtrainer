@@ -1,17 +1,39 @@
 "use client"
 import Settings from "@/app/components/Settings/Settings"
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { useSession, SessionProvider } from "next-auth/react"
+import { useState } from "react"
 
 export default function PreferencePage(){
+
+    return(
+        <SessionProvider>
+            <PreferenceContent/>
+        </SessionProvider>
+    )
+}
+
+function PreferenceContent(){
+    const { data: session } = useSession()
+    const themes = ["dark", "light", "black"]
+    type Theme = typeof themes[number]
+    const [colorScheme, setColorScheme] = useState<Theme>(session?.user?.colorScheme || "dark")
+
     return(
         <>
             <Settings.Heading>Preferences</Settings.Heading>
             <Settings.Item className="border-b-2 flex-col gap-6 pb-8">
                 <Settings.ItemHeading>Theme Selection</Settings.ItemHeading>
                 <Settings.TextContainer className="flex-row xl:gap-4">
-                    <ThemeItem className="dark" active={true}/>
-                    <ThemeItem className="light"/>
-                    <ThemeItem className="black"/>
+                    {
+                        themes.map((theme) => (
+                            <ThemeItem 
+                                key={theme} 
+                                className={theme} 
+                                active={colorScheme === theme}
+                            />
+                        ))
+                    }
                 </Settings.TextContainer>
             </Settings.Item>
         </>
