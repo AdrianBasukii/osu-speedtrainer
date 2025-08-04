@@ -8,43 +8,57 @@ export default function PreferencePage(){
 
     return(
         <SessionProvider>
-            <PreferenceContent/>
+            <ThemeChange/>
         </SessionProvider>
     )
 }
 
-function PreferenceContent(){
+function ThemeChange(){
     const { data: session } = useSession()
+    const initialColorScheme = session?.user?.colorScheme || "dark";
     const themes = ["dark", "light", "black"]
     type Theme = typeof themes[number]
-    const [colorScheme, setColorScheme] = useState<Theme>(session?.user?.colorScheme || "dark")
+    const [colorScheme, setColorScheme] = useState<Theme>(initialColorScheme || "dark")
+
+    function handleThemeChange(theme: Theme) {
+        setColorScheme(theme);
+    }
 
     return(
         <>
             <Settings.Heading>Preferences</Settings.Heading>
-            <Settings.Item className="border-b-2 flex-col gap-6 pb-8">
+            <Settings.Item className="border-b-2 flex-col gap-6 pb-6">
                 <Settings.ItemHeading>Theme Selection</Settings.ItemHeading>
-                <Settings.TextContainer className="flex-row xl:gap-4">
+                <Settings.TextContainer className="flex-row xl:gap-4 xl:justify-between">
                     {
                         themes.map((theme) => (
                             <ThemeItem 
                                 key={theme} 
                                 className={theme} 
                                 active={colorScheme === theme}
+                                onClick={() => handleThemeChange(theme as Theme)}
                             />
                         ))
                     }
                 </Settings.TextContainer>
+
+                { colorScheme !== initialColorScheme &&
+                <form action="" className="w-full flex justify-end gap-4 mt-6">
+                    <button onClick={() => handleThemeChange(initialColorScheme)} className="w-20 py-1 border-2 border-accent-secondary rounded-sm font-medium hover:cursor-pointer">Cancel</button>
+                    <button type="submit" className="w-20 py-1 bg-accent-secondary rounded-sm font-medium hover:cursor-pointer">Save</button>
+                </form>
+                }
+                
             </Settings.Item>
         </>
     )
 }
 
-function ThemeItem({className, active} : {className: string, active?: boolean}){
+function ThemeItem({className, active, onClick} : {className: string, active?: boolean, onClick?: () => void}) {
 
     const title = className[0].toUpperCase() + className.slice(1)
     return(
-        <div className={`relative w-full lg:w-48 xl:w-64 aspect-3/2 rounded-lg border-2 border-bg-tertiary ${active && "border-blue-500"} hover:border-blue-500 hover:cursor-pointer transition-all`}>
+        <div onClick={onClick} className={`relative w-full lg:w-48 xl:w-64 aspect-3/2 rounded-lg border-2 border-bg-tertiary ${active && "border-blue-500"} hover:border-blue-500 hover:cursor-pointer transition-all`}>
             {active && <CheckCircleIcon className="absolute top-2 right-2 text-blue-500"/>}
             
             <div className={`${className} bg-bg-primary rounded-t-lg w-full h-full`}>

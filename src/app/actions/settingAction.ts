@@ -123,3 +123,33 @@ export async function handleDeleteAccount(_prevState: prevState, formData: FormD
         }
     }
 }
+
+export async function handleThemeChange(_prevState: prevState, formData: FormData){
+    const session = await auth()
+    const theme = formData.get("theme") as string
+
+    if(!session || !session.user){
+        return {
+            success: false,
+            message: "User not logged in"
+        }
+    }
+
+    if(theme === "" || !["dark", "light", "black"].includes(theme)){
+        return {
+            success: false,
+            message: "Invalid theme selected!"
+        }
+    }
+
+    await User.findOneAndUpdate(
+        {_id: session.user.id},
+        {colorScheme: theme}
+    )
+
+    session.user.colorScheme = theme
+    return {
+        success: true,
+        message: "Theme changed successfully!"
+    }
+}
