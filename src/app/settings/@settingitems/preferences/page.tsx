@@ -30,14 +30,14 @@ function ThemeChange(){
         "theme_success",
         "theme_error",
         async () => {
-            document.body.classList.remove("dark", "light", "black")
-            document.body.classList.add(colorScheme)
             await update({
                 user: {
                     ...session?.user,
                     colorScheme: colorScheme
                 }
             }) 
+            document.body.classList.remove("dark", "light", "black")
+            document.body.classList.add(colorScheme)
         }
     )
 
