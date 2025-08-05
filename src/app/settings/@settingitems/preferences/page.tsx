@@ -2,23 +2,48 @@
 import Settings from "@/app/components/Settings/Settings"
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useSession, SessionProvider } from "next-auth/react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { handleTheme } from "@/app/actions/settingAction"
+import { useSettingAction } from "@/app/utils/settings/useSettingAction"
+import { AnimatePresence, motion } from "motion/react"
 
 export default function PreferencePage(){
 
     return(
         <SessionProvider>
+            <Settings.Heading>Preferences</Settings.Heading>
             <ThemeChange/>
         </SessionProvider>
     )
 }
 
 function ThemeChange(){
-    const { data: session } = useSession()
+    const { data: session, update } = useSession()
     const initialColorScheme = session?.user?.colorScheme || "dark";
     const themes = ["dark", "light", "black"]
     type Theme = typeof themes[number]
-    const [colorScheme, setColorScheme] = useState<Theme>(initialColorScheme || "dark")
+    const [colorScheme, setColorScheme] = useState<Theme>(initialColorScheme)
+    const {
+        formAction: updateThemeAction
+    } = useSettingAction(
+        handleTheme,
+        "theme_success",
+        "theme_error",
+        async () => {
+            document.body.classList.remove("dark", "light", "black")
+            document.body.classList.add(colorScheme)
+            await update({
+                user: {
+                    ...session?.user,
+                    colorScheme: colorScheme
+                }
+            }) 
+        }
+    )
+
+    useEffect(() => {
+        setColorScheme(initialColorScheme)
+    }, [initialColorScheme])
 
     function handleThemeChange(theme: Theme) {
         setColorScheme(theme);
@@ -26,8 +51,7 @@ function ThemeChange(){
 
     return(
         <>
-            <Settings.Heading>Preferences</Settings.Heading>
-            <Settings.Item className="border-b-2 flex-col gap-6 pb-6">
+            <Settings.Item className="border-b-2 flex-col gap-6 pb-6 transition-all">
                 <Settings.ItemHeading>Theme Selection</Settings.ItemHeading>
                 <Settings.TextContainer className="flex-row xl:gap-4 xl:justify-between">
                     {
@@ -42,12 +66,13 @@ function ThemeChange(){
                     }
                 </Settings.TextContainer>
 
-                { colorScheme !== initialColorScheme &&
-                <form action="" className="w-full flex justify-end gap-4 mt-6">
-                    <button onClick={() => handleThemeChange(initialColorScheme)} className="w-20 py-1 border-2 border-accent-secondary rounded-sm font-medium hover:cursor-pointer">Cancel</button>
-                    <button type="submit" className="w-20 py-1 bg-accent-secondary rounded-sm font-medium hover:cursor-pointer">Save</button>
-                </form>
-                }
+                <AnimatedButtons isVisible={colorScheme !== initialColorScheme}> 
+                    <form action={updateThemeAction} className="w-full flex justify-end gap-4 mt-6">
+                        <input type="hidden" name="theme" value={colorScheme}/>
+                        <button onClick={() => handleThemeChange(initialColorScheme)} className="w-20 py-1 border-2 border-accent-secondary rounded-sm font-medium hover:cursor-pointer">Cancel</button>
+                        <button type="submit" className="w-20 py-1 bg-accent-secondary rounded-sm font-medium hover:cursor-pointer">Save</button>
+                    </form>
+                </AnimatedButtons>
                 
             </Settings.Item>
         </>
@@ -76,5 +101,28 @@ function ThemeItem({className, active, onClick} : {className: string, active?: b
                 {title}
             </div>
         </div>
+    )
+}
+
+interface ButtonProps{
+    children: React.ReactNode
+    isVisible: boolean
+}
+
+function AnimatedButtons({children, isVisible} : ButtonProps){
+    return(
+        <AnimatePresence>
+            {isVisible &&
+            <motion.div
+                initial={{ opacity: 0, y: -10}}
+                animate={{ opacity: 1, y: 0}}
+                transition={{ duration: 0.1}}
+                exit={{ opacity: 0, y: -10}}
+                
+            >
+                {children}
+            </motion.div>
+            }
+        </AnimatePresence>
     )
 }

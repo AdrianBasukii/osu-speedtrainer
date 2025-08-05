@@ -25,7 +25,7 @@ async function fetchColorData() {
   if (!session || !session.user) {
     return
   }
-  return "dark";
+  return session.user.colorScheme || "dark";
 }
 
 export default async function RootLayout({
