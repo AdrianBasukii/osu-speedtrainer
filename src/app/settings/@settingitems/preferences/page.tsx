@@ -70,7 +70,7 @@ function ThemeChange(){
                     <form action={updateThemeAction} className="w-full flex justify-end gap-4 mt-6">
                         <input type="hidden" name="theme" value={colorScheme}/>
                         <button onClick={() => handleThemeChange(initialColorScheme)} className="w-20 py-1 border-2 border-accent-secondary rounded-sm font-medium hover:cursor-pointer">Cancel</button>
-                        <button type="submit" className="w-20 py-1 bg-accent-secondary rounded-sm font-medium hover:cursor-pointer">Save</button>
+                        <button type="submit" className="w-20 py-1 bg-accent-primary rounded-sm font-medium hover:cursor-pointer">Save</button>
                     </form>
                 </AnimatedButtons>
                 

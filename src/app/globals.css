@@ -47,10 +47,10 @@
 
 .black{
   --color-bg-primary: #000000;
-  --color-bg-secondary: #0f0f0f;
-  --color-bg-tertiary: #181818;
-  --color-accent-primary: #ffffff; 
-  --color-accent-secondary: #ffffff; 
+  --color-bg-secondary: #000000;
+  --color-bg-tertiary: #121212;
+  --color-accent-primary: #121212; 
+  --color-accent-secondary: #cacaca; 
   --color-text-primary: #ffffff;
 
   --toastify-color-dark: #0f0f0f;
