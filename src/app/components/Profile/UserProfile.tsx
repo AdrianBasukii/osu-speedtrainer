@@ -8,7 +8,7 @@ interface Props{
 
 export default function UserProfile({username, joindate} : Props){
     return(
-        <div className="w-full h-full flex flex-wrap md:gap-3 justify-center items-center">
+        <div className="w-full h-full flex flex-col md:flex-row gap-3 justify-center items-center">
             <UserLogo/>
             <div className="lg:h-full flex flex-col justify-center items-center lg:items-start gap-3">
                 <h1 className="text-3xl font-medium" >{username}</h1>

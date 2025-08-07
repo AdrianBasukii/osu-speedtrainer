@@ -4,9 +4,9 @@ interface Props{
     title?: string
 }
 
-function ProfileContainer({children} : Props){
+function ProfileContainer({children, className} : Props){
     return(
-        <div className="w-full h-full bg-bg-secondary rounded-md py-4 px-6 flex flex-col">
+        <div className={`w-full h-full bg-bg-secondary py-4 px-6 flex flex-col ${className}`}>
             {children}
         </div>
     )

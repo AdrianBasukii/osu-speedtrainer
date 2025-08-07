@@ -57,10 +57,10 @@ async function ProfileContent(){
 
             {/* Statistics */}
             <GridContainer className="grid-cols-2 md:grid-cols-[4fr_9fr]">
-                <ProfileContainer>
+                <ProfileContainer className="rounded-l-md md:rounded-md">
                     <UserProfile username={userData?.name} joindate={userData?.joindate}/>
                 </ProfileContainer>
-                <ProfileContainer>
+                <ProfileContainer className="rounded-r-md md:rounded-md">
                     <ProfileContainer.Content className="grid grid-cols-none gap-6 md:gap-0 grid-rows-3 md:grid-rows-none md:grid-cols-3">
                         <Statistic title="Total Tests" content={userProfileData.statistics.TotalTests} className="text-center md:text-left"/>
                         <Statistic title="Time Trained" content={timeTrained} className="text-center md:text-left"/>
@@ -71,14 +71,14 @@ async function ProfileContent(){
 
             {/* Top Scores */}
             <GridContainer>
-                <ProfileContainer>
+                <ProfileContainer className="rounded-md">
                     {personalBestData && <PersonalBest personalBestData={personalBestData}/>}
                 </ProfileContainer>
             </GridContainer>
 
             {/* Recents */}
             <GridContainer>
-                <ProfileContainer>
+                <ProfileContainer className="rounded-md">
                     <ProfileContainer.Heading title={"Recent Activity"} />
                     <ProfileContainer.Content className="py-6">
                         <RecentContainer recentActivity={JSON.parse(JSON.stringify(recentActivity))}/>

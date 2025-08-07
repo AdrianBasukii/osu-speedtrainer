@@ -27,10 +27,10 @@ export default function RecentContainer({recentActivity} : {recentActivity: rece
                     <tr className="text-left h-12">
                         <th className="bg-bg-secondary border-t-2 border-b-2 border-l-2 rounded-l-xl border-accent-secondary px-4">Consistency</th>
                         <th className="bg-bg-secondary border-t-2 border-b-2 border-accent-secondary">Mode</th>
-                        <th className="bg-bg-secondary border-t-2 border-b-2 border-accent-secondary">Duration</th>
-                        <th className="bg-bg-secondary border-t-2 border-b-2 border-accent-secondary">Clicks</th>
-                        <th className="bg-bg-secondary border-t-2 border-b-2 border-accent-secondary">BPM</th>
-                        <th className="bg-bg-secondary border-t-2 border-b-2 border-r-2 rounded-r-xl border-accent-secondary px-4">Created</th>
+                        <th className="hidden md:table-cell bg-bg-secondary border-t-2 border-b-2 border-accent-secondary">Duration</th>
+                        <th className="hidden md:table-cell bg-bg-secondary border-t-2 border-b-2 border-accent-secondary">Clicks</th>
+                        <th className="bg-bg-secondary border-t-2 border-b-2 border-r-2 md:border-r-0 border-accent-secondary rounded-r-xl md:rounded-none">BPM</th>
+                        <th className="hidden md:table-cell bg-bg-secondary border-t-2 border-b-2 border-r-2 rounded-r-xl border-accent-secondary px-4">Created</th>
                     </tr>
                 </thead>
                 <AnimatePresence>
@@ -47,10 +47,10 @@ export default function RecentContainer({recentActivity} : {recentActivity: rece
                         >
                             <td className="rounded-l-xl px-4">{data.consistency}%</td>
                             <td>{data.mode}</td>
-                            <td>{data.duration} seconds</td>
-                            <td>{data.clicks} clicks</td>
-                            <td>{data.bpm} BPM</td>
-                            <td className="rounded-r-xl px-4 text-sm">{formatDistanceToNow(data.setDate)} ago</td>
+                            <td className="hidden md:table-cell" >{data.duration} seconds</td>
+                            <td className="hidden md:table-cell" >{data.clicks} clicks</td>
+                            <td className="rounded-r-xl md:rounded-none">{data.bpm} BPM</td>
+                            <td className="hidden md:table-cell rounded-r-xl px-4 text-sm">{formatDistanceToNow(data.setDate)} ago</td>
                         </motion.tr>
                     </tbody>
                     )) : 
