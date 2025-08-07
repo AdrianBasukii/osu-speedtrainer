@@ -1,5 +1,6 @@
 "use client"
 import PersonIcon from '@mui/icons-material/Person';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -41,14 +42,20 @@ export default function LoggedInButton({children}: {children: React.ReactNode}){
             <div 
             ref={dropdownRef}
             onClick={handleDropdown}
-            className="w-full px-3 py-2 bg-bg-secondary rounded-md font-medium text-accent-secondary 
-            hover:cursor-pointer transition-all flex justify-between">
-                <p className='max-w-2/3 h-full flex items-center gap-2 truncate'>
-                    <PermIdentityIcon sx={{fontSize: 20}}/>
+            className="w-full font-medium text-accent-secondary 
+            hover:cursor-pointer transition-all">
+                <div className='hidden md:flex justify-between w-full px-3 py-2 bg-bg-secondary rounded-md'>
+                    <p className='max-w-2/3 h-full flex items-center gap-2 truncate'>
+                        <PermIdentityIcon sx={{fontSize: 20}}/>
+                        {children}
+                    </p>
+                    <div className={`transition-all ${isOpen ? 'rotate-180' : ''}`}>
+                        <KeyboardArrowDownIcon/>
+                    </div>
+                </div>
+                <div className='md:hidden w-full flex justify-end items-center gap-3'>
                     {children}
-                </p>
-                <div className={`transition-all ${isOpen ? 'rotate-180' : ''}`}>
-                    <KeyboardArrowDownIcon/>
+                    <AccountCircleIcon sx={{fontSize: 40}}/>
                 </div>
             </div>
 
