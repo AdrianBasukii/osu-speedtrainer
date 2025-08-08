@@ -49,11 +49,17 @@ function ThemeChange(){
         setColorScheme(theme);
     }
 
+    function handleResetForm(){
+        handleThemeChange(initialColorScheme)
+        const form = document.getElementById("form") as HTMLFormElement;
+        form.reset();
+    }
+
     return(
         <>
             <Settings.Item className="border-b-2 flex-col gap-6 pb-6 transition-all">
                 <Settings.ItemHeading>Theme Selection</Settings.ItemHeading>
-                <Settings.TextContainer className="flex-row xl:gap-4 xl:justify-between">
+                <Settings.TextContainer className="flex-col md:flex-row gap-4 xl:justify-between">
                     {
                         themes.map((theme) => (
                             <ThemeItem 
@@ -67,9 +73,9 @@ function ThemeChange(){
                 </Settings.TextContainer>
 
                 <AnimatedButtons isVisible={colorScheme !== initialColorScheme}> 
-                    <form action={updateThemeAction} className="w-full flex justify-end gap-4 mt-6">
+                    <form id="form" action={updateThemeAction} className="w-full flex justify-end gap-4 mt-6">
                         <input type="hidden" name="theme" value={colorScheme}/>
-                        <button onClick={() => handleThemeChange(initialColorScheme)} className="w-20 py-1 border-2 border-accent-secondary rounded-sm font-medium hover:cursor-pointer">Cancel</button>
+                        <button type="button" onClick={handleResetForm} className="w-20 py-1 border-2 border-accent-secondary rounded-sm font-medium hover:cursor-pointer">Cancel</button>
                         <button type="submit" className="w-20 py-1 bg-accent-primary rounded-sm font-medium hover:cursor-pointer">Save</button>
                     </form>
                 </AnimatedButtons>
@@ -83,10 +89,10 @@ function ThemeItem({className, active, onClick} : {className: string, active?: b
 
     const title = className[0].toUpperCase() + className.slice(1)
     return(
-        <div onClick={onClick} className={`relative w-full lg:w-48 xl:w-64 aspect-3/2 rounded-lg border-2 border-bg-tertiary ${active && "border-blue-500"} hover:border-blue-500 hover:cursor-pointer transition-all`}>
+        <div onClick={onClick} className={`relative w-full md:w-36 lg:w-48 xl:w-64 aspect-3/2 rounded-lg border-2 border-bg-tertiary ${active && "border-blue-500"} hover:border-blue-500 hover:cursor-pointer transition-all`}>
             {active && <CheckCircleIcon className="absolute top-2 right-2 text-blue-500"/>}
             
-            <div className={`${className} bg-bg-primary rounded-t-lg w-full h-full`}>
+            <div className={`${className} bg-bg-primary rounded-b-md md:rounded-b-none rounded-t-lg w-full h-full`}>
                 <div className="w-full h-full p-4 rounded-md bg-bg-primary shadow-lg">
                     <div className="bg-bg-secondary h-full w-full p-3 rounded-md flex flex-col justify-center gap-2">
                         <h1 className="text-text-primary font-medium">{title}</h1>
@@ -97,7 +103,7 @@ function ThemeItem({className, active, onClick} : {className: string, active?: b
                 </div>
             </div>
 
-            <div className="w-full px-4 py-3 bg-bg-secondary font-medium rounded-b-md">
+            <div className="hidden md:block w-full px-4 py-3 bg-bg-secondary font-medium rounded-b-md">
                 {title}
             </div>
         </div>

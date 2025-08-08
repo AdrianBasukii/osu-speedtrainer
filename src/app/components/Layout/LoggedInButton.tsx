@@ -54,7 +54,6 @@ export default function LoggedInButton({children}: {children: React.ReactNode}){
                     </div>
                 </div>
                 <div className='md:hidden w-full flex justify-end items-center gap-3'>
-                    {children}
                     <AccountCircleIcon sx={{fontSize: 40}}/>
                 </div>
             </div>

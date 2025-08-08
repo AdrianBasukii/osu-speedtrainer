@@ -7,7 +7,7 @@ interface Props{
 
 function Settings({children} : Props){
     return(
-        <div className="w-full h-full grid grid-rows-[1fr_3fr] md:grid-rows-none md:grid-cols-[1fr_3fr] gap-4 lg:gap-8">
+        <div className="w-full h-full flex flex-col md:grid md:grid-cols-[1fr_3fr] gap-4 lg:gap-8">
             {children}
         </div>
     )
@@ -15,10 +15,8 @@ function Settings({children} : Props){
 
 export function SettingCategory({children} : Props){
     return(
-        <div className="w-full h-full md:h-fit rounded-xl bg-bg-secondary flex flex-wrap justify-center p-6">
-            <div className="flex md:flex-col gap-6">
+        <div className="w-full h-16 md:h-fit rounded-xl md:bg-bg-secondary flex flex-wrap justify-center md:p-6">
                 {children}
-            </div>
         </div>
     )
 }
