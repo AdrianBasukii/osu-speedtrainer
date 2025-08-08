@@ -15,7 +15,7 @@ export default function ResultDisplay({ results } : {results : Results}) {
     return(
         <div className="w-full flex flex-col gap-12">
             <Chart BPMList={results.BPMList} timeList={results.timeList}/>
-            <div className="w-full flex justify-between">
+            <div className="w-full flex-wrap flex justify-center gap-4 md:gap-0 md:justify-between">
                 <MeasurementDisplay title="Peak BPM" measurement={results.peakBPM}/>
                 <MeasurementDisplay title="Average BPM" measurement={results.avgBPM}/>
                 <MeasurementDisplay title="Consistency" measurement={`${results.consistency}%`}/>
