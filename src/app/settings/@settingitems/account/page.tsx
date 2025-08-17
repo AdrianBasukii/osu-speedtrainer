@@ -46,26 +46,26 @@ export default function AccountPage(){
             <AnimatedPopup isVisible={popupStatus === "updateName"} handleClose={handlePopup}>
                 <Settings.ItemHeading className="text-accent-secondary font-medium">Type your new desired username</Settings.ItemHeading>
                 <form action={updateNameAction} className="w-full flex flex-col gap-4">
-                    <input type="text" placeholder="New username" name="name" className="p-2 w-96 h-12 border-3 border-bg-tertiary bg-bg-secondary rounded-md" autoComplete="off"/>
-                    <button type="submit" className="p-2 w-96 h-12 bg-bg-tertiary font-medium rounded-md hover:cursor-pointer">Change</button>
+                    <input type="text" placeholder="New username" name="name" className="p-2 w-full md:w-96 h-12 border-3 border-bg-tertiary bg-bg-secondary rounded-md" autoComplete="off"/>
+                    <button type="submit" className="p-2 w-full md:w-96 h-12 bg-bg-tertiary font-medium rounded-md hover:cursor-pointer">Change</button>
                 </form>
             </AnimatedPopup>
 
             <AnimatedPopup isVisible={popupStatus === "resetPersonalBest"} handleClose={handlePopup}>
                 <Settings.ItemHeading className="text-accent-secondary font-medium">Reset Personal Best</Settings.ItemHeading>
-                <Settings.ItemDesc className="text-text-primary font-medium w-96">Warning: <span className="text-red-900">This action could not be undone</span>, please type <strong>confirm</strong> to reset your personal best records.</Settings.ItemDesc>
+                <Settings.ItemDesc className="text-text-primary font-medium w-full md:w-96">Warning: <span className="text-red-900">This action could not be undone</span>, please type <strong>confirm</strong> to reset your personal best records.</Settings.ItemDesc>
                 <form action={handleResetAction} className="w-full flex flex-col gap-4">
-                    <input type="text" placeholder="Your email" name="confirm" className="p-2 w-96 h-12 border-3 border-bg-tertiary bg-bg-secondary rounded-md" autoComplete="off"/>
-                    <button type="submit" className="p-2 w-96 h-12 bg-bg-tertiary font-medium rounded-md hover:cursor-pointer">Reset</button>
+                    <input type="text" placeholder="Your email" name="confirm" className="p-2 w-full md:w-96 h-12 border-3 border-bg-tertiary bg-bg-secondary rounded-md" autoComplete="off"/>
+                    <button type="submit" className="p-2 w-full md:w-96 h-12 bg-bg-tertiary font-medium rounded-md hover:cursor-pointer">Reset</button>
                 </form>
             </AnimatedPopup>
 
             <AnimatedPopup isVisible={popupStatus === "deleteAccount"} handleClose={handlePopup}>
                 <Settings.ItemHeading className="text-accent-secondary font-medium">Delete your account</Settings.ItemHeading>
-                <Settings.ItemDesc className="text-text-primary font-medium w-96">Warning: <span className="text-red-900">This action could not be undone</span>, please type in your account email to confirm account deletion</Settings.ItemDesc>
+                <Settings.ItemDesc className="text-text-primary font-medium w-full md:w-96">Warning: <span className="text-red-900">This action could not be undone</span>, please type in your account email to confirm account deletion</Settings.ItemDesc>
                 <form action={handleDeleteAction} className="w-full flex flex-col gap-4">
-                    <input type="text" placeholder="Your email" name="yourEmail" className="p-2 w-96 h-12 border-3 border-bg-tertiary bg-bg-secondary rounded-md" autoComplete="off"/>
-                    <button type="submit" className="p-2 w-96 h-12 bg-red-900 font-medium rounded-md hover:cursor-pointer">Delete</button>
+                    <input type="text" placeholder="Your email" name="yourEmail" className="p-2 w-full md:w-96 h-12 border-3 border-bg-tertiary bg-bg-secondary rounded-md" autoComplete="off"/>
+                    <button type="submit" className="p-2 md:w-96 h-12 bg-red-900 font-medium rounded-md hover:cursor-pointer">Delete</button>
                 </form>
             </AnimatedPopup>
 

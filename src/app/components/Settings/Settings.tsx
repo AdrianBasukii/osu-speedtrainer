@@ -34,12 +34,12 @@ interface ClassProps extends Props{
 }
 
 function SettingHeading({children, className} : ClassProps){
-    return <h1 className={`text-3xl text-accent-secondary mb-6 font-semibold ${className}`}>{children}</h1>
+    return <h1 className={`text-center md:text-left text-2xl md:text-3xl text-accent-secondary mb-6 font-semibold ${className}`}>{children}</h1>
 }
 
 function SettingItem({children, className} : ClassProps){
     return(
-        <div className={`w-full min-h-24 p-3 border-bg-tertiary border-t-2 ${className} flex justify-between`}>
+        <div className={`w-full min-h-24 p-3 border-bg-tertiary border-t-2 ${className} flex gap-12 md:gap-0 flex-col md:flex-row md:justify-between`}>
             {children}
         </div>
     )
@@ -55,7 +55,7 @@ function SettingTextContainer({children, className} : ClassProps){
 
 function SettingItemHeading({children, className} : ClassProps){
     return(
-        <h1 className={`text-xl ${className}`}>
+        <h1 className={`text-lg md:text-xl ${className}`}>
             {children}
         </h1>
     )
@@ -74,7 +74,13 @@ interface ButtonProps extends ClassProps{
 }
 
 function SettingButton({children, className, onClick} : ButtonProps){
-    return <button className={`hover:cursor-pointer font-medium ${className}`} onClick={onClick}>{children}</button>
+    return (
+        <div className="flex items-center justify-center w-full md:w-fit md:h-fill">
+            <button className={`hover:cursor-pointer font-medium px-4 py-1 md:p-0 border-2 md:border-0 border-accent-primary rounded-full ${className}`} onClick={onClick}>{children}</button>
+        </div>
+    )
+    
+    
 }
 
 interface PopupProps extends Props{
@@ -102,8 +108,8 @@ function SettingPopup({children, handleState} : PopupProps){
         };
     }, [popupRef])
     return(
-        <div className="w-full h-full absolute top-0 left-0 z-20 bg-black/50 flex items-center justify-center">
-            <div ref={popupRef} className="p-4 bg-bg-primary border-3 border-bg-tertiary rounded-lg flex flex-col gap-8">
+        <div className="w-full h-full absolute fixed top-0 left-0 z-20 bg-black/50 flex items-center justify-center">
+            <div ref={popupRef} className="w-[90%] md:w-fit p-4 bg-bg-primary border-3 border-bg-tertiary rounded-lg flex flex-col gap-8">
                 {children}
             </div>
         </div>

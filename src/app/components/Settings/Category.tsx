@@ -77,7 +77,7 @@ export function MobileCategoryView(){
             ref={dropdownRef}
             className="w-full px-3 py-2 rounded-md font-medium text-accent-secondary border-2 border-bg-tertiary
             hover:cursor-pointer transition-all flex justify-between">
-            <p className='text-2xl md:text-md max-w-2/3 h-full flex items-center gap-2 truncate'>
+            <p className='text-xl md:text-md max-w-2/3 h-full flex items-center gap-2 truncate'>
                 {activePath[0].toUpperCase()}{activePath.slice(1)}
             </p>
             <div className={`transition-all ${isOpen ? 'rotate-180' : ''}`}>
