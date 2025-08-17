@@ -56,15 +56,15 @@ async function ProfileContent(){
         <div className="w-full h-full flex flex-col gap-8">
 
             {/* Statistics */}
-            <GridContainer className="grid-cols-2 md:grid-cols-[4fr_9fr]">
-                <ProfileContainer className="rounded-l-md md:rounded-md">
+            <GridContainer className="grid-cols-1 md:grid-cols-[4fr_9fr]">
+                <ProfileContainer className="rounded-t-md md:rounded-md">
                     <UserProfile username={userData?.name} joindate={userData?.joindate}/>
                 </ProfileContainer>
-                <ProfileContainer className="rounded-r-md md:rounded-md">
-                    <ProfileContainer.Content className="grid grid-cols-none gap-6 md:gap-0 grid-rows-3 md:grid-rows-none md:grid-cols-3">
-                        <Statistic title="Total Tests" content={userProfileData.statistics.TotalTests} className="text-center md:text-left"/>
-                        <Statistic title="Time Trained" content={timeTrained} className="text-center md:text-left"/>
-                        <Statistic title="Avg Consistency" content={`${consistency ? consistency.toFixed(2) : 0}%`} className="text-center md:text-left"/>
+                <ProfileContainer className="rounded-b-md md:rounded-md">
+                    <ProfileContainer.Content className="grid grid-cols-1 gap-0 md:gap-0 md:grid-cols-3 divide-y divide-accent-secondary/20 md:divide-y-0">
+                        <Statistic title="Total Tests" content={userProfileData.statistics.TotalTests} className="text-center"/>
+                        <Statistic title="Time Trained" content={timeTrained} className="text-center"/>
+                        <Statistic title="Avg Consistency" content={`${consistency ? consistency.toFixed(2) : 0}%`} className="text-center"/>
                     </ProfileContainer.Content>
                 </ProfileContainer>
             </GridContainer>
