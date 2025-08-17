@@ -14,11 +14,15 @@ function ProfileContainer({children, className} : Props){
 
 function ProfileHeading({children, title} : Props){
     return(
-        <div className="grid grid-cols-2">
-            <div>
-                {title && <h1 className="w-full font-medium text-3xl text-accent-secondary">{title}</h1>}
+        <div className="flex flex-col sm:grid sm:grid-cols-12 gap-3 sm:gap-4">
+            <div className="sm:col-span-6 lg:col-span-8 xl:col-span-9">
+                {title && (
+                    <h1 className="w-full font-medium text-2xl sm:text-3xl text-accent-secondary break-words">
+                        {title}
+                    </h1>
+                )}
             </div>
-            <div className="w-full flex justify-end gap-3">
+            <div className="sm:col-span-6 lg:col-span-4 xl:col-span-3 flex justify-start sm:justify-end gap-2 sm:gap-3 flex-wrap">
                 {children}
             </div>
         </div>

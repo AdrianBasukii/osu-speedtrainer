@@ -36,7 +36,7 @@ export default function PersonalBest({personalBestData}:{personalBestData: perso
                 {
                     Object.entries(selectedData).map((data, key) => (
                         <Statistic 
-                        className="text-center"
+                        className="text-center h-full"
                         key={key} 
                         title={measurement === "Time" ? 
                             `${data[0].replace('s', '')} seconds` :
