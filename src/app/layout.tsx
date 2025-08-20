@@ -3,6 +3,7 @@ import { auth } from "@/lib/auth"
 import { Geist, Geist_Mono } from "next/font/google";
 import MainContainer from "./components/Layout/MainContainer";
 import { ToastContainer } from "react-toastify";
+import { Analytics } from "@vercel/analytics/next"
 import "./globals.css";
 
 const geistSans = Geist({
@@ -42,6 +43,7 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${colorData ? colorData : "dark"} bg-bg-primary text-text-primary antialiased`}
       >
         <ToastContainer/>
+        <Analytics/>
         <MainContainer>
           {children}
         </MainContainer>
