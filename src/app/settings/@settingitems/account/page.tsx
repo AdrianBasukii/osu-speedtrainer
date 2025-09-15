@@ -72,7 +72,7 @@ export default function AccountPage(){
             {/* Code */}
 
             <Settings.Heading>Account</Settings.Heading>
-            <Settings.Item>
+            <Settings.Item className="py-8 md:py-0 flex-col md:flex-row gap-12 md:gap-0">
                 <Settings.TextContainer>
                     <Settings.ItemHeading>Change your username</Settings.ItemHeading>
                     <Settings.ItemDesc>Choose a new username that fits you.</Settings.ItemDesc>
@@ -80,7 +80,7 @@ export default function AccountPage(){
                 <Settings.Button onClick={() => handlePopup("updateName")}>Change</Settings.Button>
             </Settings.Item>
 
-            <Settings.Item>
+            <Settings.Item className="py-8 md:py-0 flex-col md:flex-row gap-12 md:gap-0">
                 <Settings.TextContainer>
                     <Settings.ItemHeading>Reset Personal Best</Settings.ItemHeading>
                     <Settings.ItemDesc>Delete all your current personal best records. <span className="text-red-900">You can’t undo this action!</span></Settings.ItemDesc>
@@ -88,7 +88,7 @@ export default function AccountPage(){
                 <Settings.Button onClick={() => handlePopup("resetPersonalBest")}>Reset</Settings.Button>
             </Settings.Item>
 
-            <Settings.Item className="border-b-2">
+            <Settings.Item className="py-8 md:py-0 flex-col md:flex-row gap-12 md:gap-0 border-b-2">
                 <Settings.TextContainer>
                     <Settings.ItemHeading>Delete your account</Settings.ItemHeading>
                     <Settings.ItemDesc>Delete your account. <span className="text-red-900">You can’t undo this action!</span></Settings.ItemDesc>

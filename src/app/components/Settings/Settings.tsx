@@ -39,7 +39,7 @@ function SettingHeading({children, className} : ClassProps){
 
 function SettingItem({children, className} : ClassProps){
     return(
-        <div className={`w-full min-h-24 p-3 border-bg-tertiary border-t-2 ${className} flex gap-12 md:gap-0 flex-col md:flex-row md:justify-between`}>
+        <div className={`w-full min-h-24 p-3 border-bg-tertiary border-t-2 ${className} flex md:justify-between`}>
             {children}
         </div>
     )
